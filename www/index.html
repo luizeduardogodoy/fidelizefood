@@ -47,7 +47,7 @@
 	<script src="js/vendor/modernizr.js"></script>
 	 
 	<!--<link rel="stylesheet" type="text/css" href="css/index.css" />-->
-	 
+	 	 
     <title>Hello World</title>
 </head>
 
@@ -60,7 +60,7 @@
 		
 		<div class="small-12 large-6 columns">
 			<label for="user"> Usuário: 
-				<input type="text" id="user"/>
+				<input type="text" id="user" />
 			</label>
 		</div>
 
@@ -70,10 +70,14 @@
 			</label>
 		</div>			
 			
-		<div class="small-12 large-2 columns panel" align="center" style="position:absolute;background:#521474;bottom:0px">
-			<div style="color:white" onclick="login()">ENTRAR</div>
+		<div class="small-12 large-2 columns panel" align="center" style="position:absolute;background:#521474;bottom:70px">
+			<div style="color:white" onclick="login()">Entrar</div>
 		</div>
-		 
+		
+		<div class="small-12 large-2 columns panel" align="center" style="position:absolute;background:#545487;bottom:0px">
+			<div style="color:white" onclick="cadastrarUser()">Cadastrar</div>
+		</div>
+		
     </div>
 
 	</div>
@@ -107,10 +111,15 @@
 
 					var obj = $.parseJSON(response);
 
-					if(obj.status == "nok" )
+					if(obj.status == "!ok" )
 						alert("Não foi possivel acessar, usuário ou senha inválidos");
 					else{
-						window.location.href = "main.html";
+					
+						var details = new Array();
+						details = [$("#user").val(), $("#pass").val()];
+						window.sessionStorage.setItem("info", JSON.stringify(details));
+					
+						//window.location.href = "main.html";
 					}
 				}
 			);
@@ -118,6 +127,11 @@
 
 		function init(){
 			mudar();
+		}
+		
+		function cadastrarUser(){
+		
+			window.location.href = "cadastrouser.html";
 		}
 
 		function mudar(){
