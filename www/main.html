@@ -89,6 +89,12 @@
 	</div>
 	
 	<div class="row">
+		<div id="name_user" class="small-12 columns">
+			
+		</div>
+	</div>
+	
+	<div class="row">
 		<div class="small-12 columns">
 		
 			<table>
@@ -124,6 +130,11 @@
 		</div>
 		
 	</div>
+	<div class="row">
+		<button onclick="alertSession()">TESTE</button>
+		
+	
+	</div>
  
  
 	<script type="text/javascript" src="cordova.js"></script>
@@ -139,61 +150,31 @@
 		$(document).ready(function(){
 			
 		});
-		
-		function login(){
-			jQuery.get("http://sturdy-white-harbor-223885.nitrousapp.com/", function(response){
-				alert(response);
-				
-				window.location.href = "teste.cu";
-			});
+
+		function init(){
+			var retrieveInfo = window.sessionStorage.getItem("info");
+			var parsedInfo = JSON.parse(retrieveInfo);
+			
+			$("#name_user").html(parsedInfo);
+			
 		}
-		
 
+		function alertSession(){
+			
+			var retrieveInfo = window.sessionStorage.getItem("info");
+			var parsedInfo = JSON.parse(retrieveInfo);
+			
+			alert(parsedInfo);
+		}
 
-        function init(){
-            
+		function mudar(){
+			StatusBar.show();
+			StatusBar.backgroundColorByHexString("#ff4500");
+		}
 
-        }
+	  document.addEventListener('deviceready', init, false);
+	 
 
-        function vibrar(){
-            navigator.vibrate(1000);
-           // StatusBar.hide();
-        }
-
-        function mudar(){
-            StatusBar.show();
-            StatusBar.backgroundColorByHexString("#ff4500");
-        }
-
-        document.addEventListener('deviceready', init, false);
-        //document.addEventListener("batterylow", onBatteryLow, false); 
-        //StatusBar.backgroundColorByName("red");
-
-
-        /*navigator.contacts.pickContact(function(contact){
-            alert('The following contact has been selected:' + JSON.stringify(contact));
-        },function(err){
-            console.log('Error: ' + err);
-        });*/
-        
-        function alertDismissed() {
-    // do something
-
-
-        }
-
-        function dados(){
-            var t = document.getElementById("nome").value + "";
-
-           // alert(t);
-            navigator.notification.alert(
-                t,  // message
-                alertDismissed,         // callback
-                'Obrigado',            // title
-                'Sair'                  // buttonName
-            );
-    }
-                
 
     </script>
 </body>
