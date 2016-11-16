@@ -50,7 +50,7 @@
 	 
 	<!--<link rel="stylesheet" type="text/css" href="css/index.css" />-->
 	 	 
-    <title>PÁGINA TESTE</title>
+    <title>FIDELIZEFOOD - MAIN</title>
 </head>
 
 <body>
@@ -89,52 +89,59 @@
 	</div>
 	
 	<div class="row">
-		<div id="name_user" class="small-12 columns">
+		<div id="name_user" class="small-12 columns"></div>
+	</div>
+	
+	<div class="row cadastro-restaurante">
+		<div class="small-12 columns">
+			<h1>Informe os dados do restaurante</h1>
+		</div>
+		
+		<div class="small-12 columns">
+			<label>Nome: <input type="text" name="nome" id="nome"/>
+			
+			</label>
 			
 		</div>
-	</div>
-	
-	<div class="row">
 		<div class="small-12 columns">
-		
-			<table>
-			  <thead>
-				 <tr>
-					<th width="200">Table Header</th>
-					<th>Table Header</th>
-					<th width="150">Table Header</th>
-					<th width="150">Table Header</th>
-				 </tr>
-			  </thead>
-			  <tbody>
-				 <tr>
-					<td>Content Goes Here</td>
-					<td>This is longer content Donec id elit non mi porta gravida at eget metus.</td>
-					<td>Content Goes Here</td>
-					<td>Content Goes Here</td>
-				 </tr>
-				 <tr>
-					<td>Content Goes Here</td>
-					<td>This is longer Content Goes Here Donec id elit non mi porta gravida at eget metus.</td>
-					<td>Content Goes Here</td>
-					<td>Content Goes Here</td>
-				 </tr>
-				 <tr>
-					<td>Content Goes Here</td>
-					<td>This is longer Content Goes Here Donec id elit non mi porta gravida at eget metus.</td>
-					<td>Content Goes Here</td>
-					<td>Content Goes Here</td>
-				 </tr>
-			  </tbody>
-			</table>
+			<label>CNPJ: <input type="text" name="cnpj" id="cnpj" />
+			
+			</label>
+			
+		</div>
+		<div class="small-12 columns">
+			<label>Estado: <input type="text" name="estado" id="estado"/>
+			
+			</label>
+			
+		</div>
+		<div class="small-12 columns">
+			<label>Cidade: <input type="text" name="cidade" id="cidade"/>
+			
+			</label>
+			
+		</div>
+		<div class="small-12 columns">
+			<label>Endereço: <input type="text" name="endereco" id="endereco"/>
+			
+			</label>
+			
 		</div>
 		
-	</div>
-	<div class="row">
-		<button onclick="alertSession()">TESTE</button>
+		<div class="small-12 columns">
+			<label>Telefone: <input type="text" name="telefone" id="telefone"/>
+			
+			</label>
+			
+		</div>
 		
-	
+		<div class="small-12 columns">
+			<button style="buttom expanded">Cadastrar Restaurante</button>
+		</div>
 	</div>
+		
+	</div>
+	
  
  
 	<script type="text/javascript" src="cordova.js"></script>
@@ -151,20 +158,37 @@
 			
 		});
 
+		var tipoUser = null;
+		
+		/*Inicializa o main do app e ja consulta se o usuário cadastrou o restaurante*/
+		
 		function init(){
 			var retrieveInfo = window.sessionStorage.getItem("info");
 			var parsedInfo = JSON.parse(retrieveInfo);
 			
-			$("#name_user").html(parsedInfo);
+			tipoUser = parsedInfo[2];
 			
+			$("#name_user").html("Bem vindo:" + parsedInfo[1]);
+			
+			if(tipoUser == 0){
+			
+				$.post("http://teste/fidelizefood/public_html/index.php",{req : "consultarestaurante"}, function(response){
+					
+					
+				});
+			}
 		}
 
 		function alertSession(){
 			
-			var retrieveInfo = window.sessionStorage.getItem("info");
-			var parsedInfo = JSON.parse(retrieveInfo);
+			if(tipoUser == 0){
+				alert("Usuário Logado é restaurante");
+			}
+			else{
+				alert("Usuário Logado é consumidor");
+			}
 			
-			alert(parsedInfo);
+			
 		}
 
 		function mudar(){
@@ -172,9 +196,7 @@
 			StatusBar.backgroundColorByHexString("#ff4500");
 		}
 
-	  document.addEventListener('deviceready', init, false);
-	 
-
+		document.addEventListener('deviceready', init, false);
 
     </script>
 </body>
