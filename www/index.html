@@ -53,34 +53,39 @@
 </head>
 
 <body>
-    <div class="row">
-
-		<div style="background:white;margin-bottom:60px" class="small-12 columns panel" align="center">
-			<h1 style="color:#521474">FIDELIZEFOOD</h1>
+		<div class="row hide" id="wait" align="center" style="position:absolute;margin-top:0;z-index:99" >
+			<div class="small-12 columns success label" style="padding:20px">
+				<div>Aguarde, conectando...</div>
+			</div>
 		</div>
+		<div class="row" id="form-login">
+		
+			<div style="background:white;margin-bottom:60px" class="small-12 columns panel" align="center">
+				<h1 style="color:#521474">FIDELIZEFOOD</h1>
+			</div>
+			
+			<div class="small-12 large-6 columns">
+				<label for="user"> Usuário:
+					<input type="text" id="user" />
+				</label>
+			</div>
 
-		<div class="small-12 large-6 columns">
-			<label for="user"> Usuário:
-				<input type="text" id="user" />
-			</label>
+			<div class="small-12 large-6 columns" style="margin-bottom:150px">
+				<label for="pass"> Senha:
+					<input type="password" id="pass"/>
+				</label>
+			</div>
+			<!--style="position:absolute;background:#521474;bottom:70px-->
+			<div class="small-12 columns" align="center" >
+				<button style="background-color:#521474;color:white" class="small button expand" onclick="login()">ENTRAR</button>
+			</div>
+			<!--position:absolute;background:#545487;bottom:0px-->
+			<div class="small-12 columns" align="center" style="margin-top:-18px">
+				<button style="background-color:#545487;color:white" class="small button expand" onclick="cadastrarUser()">CADASTRAR</button>				
+			</div>
+
 		</div>
-
-		<div class="small-12 large-6 columns">
-			<label for="pass"> Senha:
-				<input type="password" id="pass"/>
-			</label>
-		</div>
-
-		<div class="small-12 large-2 columns panel" align="center" style="position:absolute;background:#521474;bottom:70px">
-			<div style="color:white" onclick="login()">Entrar</div>
-		</div>
-
-		<div class="small-12 large-2 columns panel" align="center" style="position:absolute;background:#545487;bottom:0px">
-			<div style="color:white" onclick="cadastrarUser()">Cadastrar</div>
-		</div>
-
-    </div>
-
+		
 	</div>
 	<script type="text/javascript" src="cordova.js"></script>
 	<script src="js/vendor/jquery.js"></script>
@@ -91,17 +96,22 @@
 
 		$(document).foundation();
 
-		/*$(document).ready(function(){
-
-		});*/
+		$(document).ready(function(){
+			
+			
+		});
 
 		function login(){
 
-			if($("#user").val() == "" && $("#pass").val() == ""){
+			if($("#user").val() == "" || $("#pass").val() == ""){
 				alert("Por favor, informar usuário e senha");
 				return;
 			}
 
+			
+			$("#wait").removeClass("hide");
+			$("#form-login").css("opacity",0.3);
+			
 			$.post("https://fidelizefood-backend-luizeg.c9users.io/public_html/index.php",
 				{
 					req : "login",
@@ -112,8 +122,11 @@
 
 					var obj = $.parseJSON(response);
 
-					if(obj.status == "!ok" )
+					if(obj.status == "!ok"){
 						alert("Não foi possivel acessar, usuário ou senha inválidos");
+						$("#wait").addClass("hide");
+						$("#form-login").css("opacity",1);
+					}
 					else{
 
 						var dadosUser = new Array();

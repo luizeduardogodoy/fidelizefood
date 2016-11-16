@@ -145,10 +145,10 @@
 			$.post("https://fidelizefood-backend-luizeg.c9users.io/public_html/index.php", 
 				user,
 				function(response){
-
+	
 					var obj = $.parseJSON(response);
 
-					if(obj.status == "!ok" )
+					if(obj.status == "!ok" || obj.status == undefined)
 						alert("Não foi possivel cadastrar o usuário");
 					else{
 						alert("Usuário cadastrado com sucesso, faça o login com os dados informados");
