@@ -102,7 +102,7 @@
 				return;
 			}
 
-			$.post("http://teste/fidelizefood/public_html/index.php",
+			$.post("https://fidelizefood-backend-luizeg.c9users.io/public_html/index.php",
 				{
 					req : "login",
 					user : $("#user").val(),
@@ -116,9 +116,9 @@
 						alert("Não foi possivel acessar, usuário ou senha inválidos");
 					else{
 
-            var details = new Array();
-						details = [$("#user").val(), $("#pass").val(), obj.tipo];
-						window.sessionStorage.setItem("info", JSON.stringify(details));
+						var dadosUser = new Array();
+						dadosUser = [obj.id, obj.nome, obj.tipo];
+						window.sessionStorage.setItem("info", JSON.stringify(dadosUser));
 
 						window.location.href = "main.html";
 					}
