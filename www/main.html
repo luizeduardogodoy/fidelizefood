@@ -92,7 +92,7 @@
 		<div id="name_user" class="small-12 columns"></div>
 	</div>
 	
-	<div  class="row cadastro-restaurante">
+	<div  class="row cadastro-restaurante hide">
 		<div class="small-12 columns">
 			<h1>Informe os dados do restaurante</h1>
 		</div>
@@ -170,7 +170,7 @@
 			
 			if(tipoUser == 2){
 			
-				$.post("https://fidelizefood-backend-luizeg.c9users.io/public_html/index.php",
+				$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php",
 					{
 						req : "consultarestaurante",
 						user_id : parsedInfo[0]
@@ -180,11 +180,15 @@
 						var obj = $.parseJSON(response);
 						
 						if(obj.status == "ok"){
-							alert("Restaurante já informado");
+							//alert("Restaurante já informado");
 							$(".cadastro-restaurante").hide();
+							
+							$("body").append("<button onclick='window.location.href =\"campanha.html\"; '>Cadastrar campanha</button>");
 						}
 						else{
-							alert("Restaurante não informado ainda");
+							//alert("Restaurante não informado ainda");
+							
+							
 						}
 					
 				});
