@@ -59,6 +59,7 @@
 			</div>
 		</div>
 		<div class="row" id="form-login">
+		<form data-abide="ajax" id="loginPage">
 		
 			<div style="background:white;margin-bottom:60px" class="small-12 columns panel" align="center">
 				<h1 style="color:#521474">FIDELIZEFOOD</h1>
@@ -66,24 +67,28 @@
 			
 			<div class="small-12 large-6 columns">
 				<label for="user"> Usuário:
-					<input type="text" id="user" />
+					<input type="text" id="user" placeholder="Digite seu usuário de acesso..." required/>
 				</label>
+				<small class="error">Nome é requerido.</small>
 			</div>
 
-			<div class="small-12 large-6 columns" style="margin-bottom:150px">
+			<div class="small-12 large-6 columns">
 				<label for="pass"> Senha:
-					<input type="password" id="pass"/>
+					<input type="password" id="pass" placeholder="Digite sua senha..." required/>
 				</label>
+				<small class="error">Senha é requerida.</small>
 			</div>
+			
 			<!--style="position:absolute;background:#521474;bottom:70px-->
 			<div class="small-12 columns" align="center" >
-				<button style="background-color:#521474;color:white" class="small button expand" onclick="login()">ENTRAR</button>
+				<!--<button style="background-color:#521474;color:white" class="small button expand" onclick="login()">ENTRAR</button>-->
+				<button type="submit">Enviar</button>
 			</div>
 			<!--position:absolute;background:#545487;bottom:0px-->
-			<div class="small-12 columns" align="center" style="margin-top:-18px">
+			<!--<div class="small-12 columns" align="center" style="margin-top:-18px">
 				<button style="background-color:#545487;color:white" class="small button expand" onclick="cadastrarUser()">CADASTRAR</button>				
-			</div>
-
+			</div>-->
+		</form>
 		</div>
 		
 	</div>
@@ -97,8 +102,13 @@
 		$(document).foundation();
 
 		$(document).ready(function(){
-			
-			
+		
+		});
+		
+		$('#loginPage').on('valid.fndtn.abide', function() {
+		  // Handle the submission of the form
+		  
+			login();
 		});
 
 		function login(){
@@ -112,7 +122,7 @@
 			$("#wait").removeClass("hide");
 			$("#form-login").css("opacity",0.3);
 			
-			$.post("https://fidelizefood-backend-luizeg.c9users.io/public_html/index.php",
+			$.post("http://teste/fidelizefood/public_html/index.php",
 				{
 					req : "login",
 					user : $("#user").val(),
