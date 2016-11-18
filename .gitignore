@@ -1,0 +1,9 @@
+/hooks
+/platforms
+LICENSE
+COPYRIGHT
+NOTICE
+README.MD
+.npmignore
+package.json
+config.xml
