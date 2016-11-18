@@ -82,7 +82,7 @@
 			<!--style="position:absolute;background:#521474;bottom:70px-->
 			<div class="small-12 columns" align="center" >
 				<!--<button style="background-color:#521474;color:white" class="small button expand" onclick="login()">ENTRAR</button>-->
-				<button type="submit">Enviar</button>
+				<button type="submit" class="expand small">ENVIAR</button>
 			</div>
 			
 		</form>
@@ -99,16 +99,14 @@
 	<script src="js/foundation/foundation.topbar.js"></script>
 
 	<script type="text/javascript">
-
+		
 		$(document).foundation();
-
-		$(document).ready(function(){
 		
-		});
-		
-		$('#loginPage').on('valid.fndtn.abide', function() {
+		$('#loginPage').on('valid.fndtn.abide', function(e) {
 		  // Handle the submission of the form
-		  
+			 if(e.namespace != 'abide.fndtn') {
+				  return;
+			 }
 			login();
 		});
 
@@ -123,7 +121,9 @@
 			$("#wait").removeClass("hide");
 			$("#form-login").css("opacity",0.3);
 			
-			$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php",
+			$.post("https://fidelizefood-backend-luizeg.c9users.io/public_html/index.php",
+			//$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php",
+			
 				{
 					req : "login",
 					user : $("#user").val(),

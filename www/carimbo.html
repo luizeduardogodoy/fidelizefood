@@ -26,6 +26,7 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+
     <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
     <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
     <!-- Good default declaration:
@@ -38,23 +39,18 @@
     -->
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
 
-
-	<!-- If you are using the gem version, you need this only -->
-	
 	<link rel="stylesheet" href="css/normalize.css">
 	<link rel="stylesheet" href="css/foundation.css">
 
 	<!-- If you are using the gem version, you need this only -->
 	<link rel="stylesheet" href="css/app.css">
 	<script src="js/vendor/modernizr.js"></script>
-	 
-	<!--<link rel="stylesheet" type="text/css" href="css/index.css" />-->
-	 	 
-    <title>FIDELIZEFOOD - MAIN</title>
+
+    <title>FIDELIZEFOOD - CARIMBO</title>
+
 </head>
 
 <body>
-	
 	<div class="row" id="menu-user-consumidor" style="display:none">
 		<nav class="top-bar" data-topbar role="navigation" style="background:#521474">
 			<ul class="title-area">
@@ -91,7 +87,7 @@
 		<nav class="top-bar" data-topbar role="navigation" style="background:#301174">
 			<ul class="title-area">
 				<li class="name">
-					<h1><a href="main.html">FIDELIZEFOOD</a></h1>
+					<h1><a href="#">FIDELIZEFOOD</a></h1>
 				</li>
 				
 				<!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
@@ -113,118 +109,36 @@
 
 				<!-- Left Nav Section -->
 				<ul class="left">
-					<li><a href="#">Campanha ativa</a></li>
+					<li><a href="#">Left Nav Button</a></li>
 				</ul>
 		  </section>
 		</nav>		
 	</div>
-	
-	<div class="row">
-		<div id="name_user" onclick="init()" class="small-12 columns"></div>
-	</div>
-		
-	<table>
-	  <thead>
-		 <tr>
-			<th width="200">Usuário</th>
-			<th>Qtde</th>
-			<th width="150">Total</th>
-			<th width="150">Ult. Ref</th>
-		 </tr>
-	  </thead>
-	  <tbody>
-		 <tr>
-			<td>Luiz Eduardo</td>
-			<td>10</td>
-			<td>20</td>
-			<td>25/12/2015</td>
-		 </tr>
-		 <tr>
-			<td>Luiz Eduardo</td>
-			<td>10</td>
-			<td>20</td>
-			<td>25/12/2015</td>
-		 </tr>
-		 <tr>
-			<td>Luiz Eduardo</td>
-			<td>10</td>
-			<td>20</td>
-			<td>25/12/2015</td>
-		 </tr>
-	  </tbody>
-	</table>		
-	
 
+	<div class="row">
+  
+		<div class="small-12 large-6 columns">	
+			<label for="user">Registre o carimbo:
+				<input type="text" name="nomeFantasia" id="nomeFantasia"/>
+			</label>
+			<small style="display:none">Informar cpf cliente</small>
+		</div>
+		<div class="small-12 large-6 columns">
+				<input type="submit" onclick="Registrar" class="button radius expand"/>
+		</div>
+	</div>
 	
-	<div  class="row cadastro-restaurante hide">
-		<div class="small-12 columns">
-			<h1>Informe os dados do restaurante</h1>
-		</div>
-		
-		<div class="small-12 columns">
-			<label>Nome: <input type="text" name="nome" id="nome"/>
-			
-			</label>
-			
-		</div>
-		<div class="small-12 columns">
-			<label>CNPJ: <input type="text" name="cnpj" id="cnpj" />
-			
-			</label>
-			
-		</div>
-		<div class="small-12 columns">
-			<label>Estado: <input type="text" name="estado" id="estado"/>
-			
-			</label>
-			
-		</div>
-		<div class="small-12 columns">
-			<label>Cidade: <input type="text" name="cidade" id="cidade"/>
-			
-			</label>
-			
-		</div>
-		<div class="small-12 columns">
-			<label>Endereço: <input type="text" name="endereco" id="endereco"/>
-			
-			</label>
-			
-		</div>
-		
-		<div class="small-12 columns">
-			<label>Telefone: <input type="text" name="telefone" id="telefone"/>
-			
-			</label>
-			
-		</div>
-		
-		<div class="small-12 columns">
-			<button style="buttom expanded">Cadastrar Restaurante</button>
-		</div>
-	</div>
-		
-	</div>
 	
 	<script type="text/javascript" src="cordova.js"></script>
-   
 	<script src="js/vendor/jquery.js"></script>
 	<script src="js/foundation.min.js"></script>
-	<script src="js/foundation/foundation.offcanvas.js"></script>
-	<script src="js/foundation/foundation.topbar.js"></script>	
-	 
-    <script type="text/javascript">
-		$(document).foundation();	 
-	
-		$(document).ready(function(){
-			
-		});
+	<script src="js/foundation/foundation.topbar.js"></script>
+	<script type="text/javascript">
 
-		var tipoUser = null;
-		
-		/*Inicializa o main do app e ja consulta se o usuário cadastrou o restaurante*/
+		$(document).foundation();
 		
 		function init(){
+			
 			var retrieveInfo = window.sessionStorage.getItem("info");
 			var parsedInfo = JSON.parse(retrieveInfo);
 			
@@ -238,51 +152,39 @@
 				$("#menu-user-consumidor").show();
 			}
 			
-			$("#name_user").html("Bem vindo:" + parsedInfo[1]);
+			//$.post("http://softprevirpps/code/public_html/index.php",
 			
-			if(tipoUser == 2){
-			
-				$.post("https://fidelizefood-backend-luizeg.c9users.io/public_html/index.php",
-					{
-						req : "consultarestaurante",
-						user_id : parsedInfo[0]
-					}, 
-					function(response){
-						
-						var obj = $.parseJSON(response);
-						
-						if(obj.status == "ok"){
-							//alert("Restaurante já informado");
-							$(".cadastro-restaurante").hide();
-							
-							$("body").append("<br /><button class='expand' onclick='window.location.href =\"campanha.html\"; '>Cadastrar campanha</button>");
-						}
-						else{
-							//alert("Restaurante não informado ainda");
-							window.location.href = "cadastrorestaurante.html";
-						}
+			$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php", rest, 
+				function(response){
 					
-				});
-			}
-		}
+					var obj = $.parseJSON(response);
+					alert (obj);
 
-		function alertSession(){			
-			if(tipoUser == 0){
-				alert("Usuário Logado é restaurante");
-			}
-			else{
-				alert("Usuário Logado é consumidor");
-			}			
+					if(obj.status == "!ok" ){
+						alert("Não foi possivel cadastrar o restaurante");
+					}
+					else{
+						alert("Restaurante cadastrado com sucesso!");
+						
+						var details = new Array();
+						details = [$("#nomeFantasia").val(), $("#cnpj").val(),$("#phone").val()];
+						window.sessionStorage.setItem("info", JSON.stringify(details));
+					
+						window.location.href = "index.html";
+					}
+				}
+			);
+			
+			mudar();
 		}
-
+		
 		function mudar(){
 			StatusBar.show();
-			StatusBar.backgroundColorByHexString("#ff4500");
+			StatusBar.backgroundColorByHexString("#521474");
 		}
 
-		document.addEventListener('deviceready', init, false);
+		document.addEventListener('deviceready', init, false);					 
 
-    </script>
+	</script>
 </body>
-
 </html>
