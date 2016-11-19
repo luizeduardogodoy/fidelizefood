@@ -59,7 +59,7 @@
 		<nav class="top-bar" data-topbar role="navigation" style="background:#521474">
 			<ul class="title-area">
 				<li class="name">
-					<h1><a href="#">FIDELIZEFOOD</a></h1>
+					<h1><a href="#">FIDELIZEFOOD - CLIENTE</a></h1>
 				</li>
 				
 				<!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
@@ -88,7 +88,7 @@
 	</div>
 	
 	<div class="row" id="menu-user-fornecedor" style="display:none">
-		<nav class="top-bar" data-topbar role="navigation" style="background:#301174">
+		<nav class="top-bar" data-topbar role="navigation" style="background:#521474">
 			<ul class="title-area">
 				<li class="name">
 					<h1><a href="main.html">FIDELIZEFOOD</a></h1>
@@ -113,7 +113,7 @@
 
 				<!-- Left Nav Section -->
 				<ul class="left">
-					<li><a href="#">Campanha ativa</a></li>
+					<li><a href="#" onclick="$('#campanha_ativa').show()">Campanha ativa</a></li>
 				</ul>
 		  </section>
 		</nav>		
@@ -122,92 +122,81 @@
 	<div class="row">
 		<div id="name_user" onclick="init()" class="small-12 columns"></div>
 	</div>
-		
-	<table>
-	  <thead>
-		 <tr>
-			<th width="200">Usuário</th>
-			<th>Qtde</th>
-			<th width="150">Total</th>
-			<th width="150">Ult. Ref</th>
-		 </tr>
-	  </thead>
-	  <tbody>
-		 <tr>
-			<td>Luiz Eduardo</td>
-			<td>10</td>
-			<td>20</td>
-			<td>25/12/2015</td>
-		 </tr>
-		 <tr>
-			<td>Luiz Eduardo</td>
-			<td>10</td>
-			<td>20</td>
-			<td>25/12/2015</td>
-		 </tr>
-		 <tr>
-			<td>Luiz Eduardo</td>
-			<td>10</td>
-			<td>20</td>
-			<td>25/12/2015</td>
-		 </tr>
-	  </tbody>
-	</table>		
 	
+	<!--  PROTOTIPO CAMPANHA ATIVA BEGIN-->
+	<div class="row" id="campanha_ativa" style="display:none;background:#ddd;padding:10px">
+		<div class="small-12 columns"><b>Nome:</b> Fidelidade 2016</div>
+		<div class="small-12 columns"><b>Qtde Refeição:</b> 15</div>
+		<div class="small-12 columns"><b>Início:</b> 01/01/2016 <b>Término:</b> 31/12/2016</div>
+		
+		<div class="small-12 columns" style="padding-bottom:25px"><b>Obs:</b> Desconto de 15 reais no almoço quanto atingir a quantidade de refeições</div>
+		
+		<div class="small-6 columns"><button class="small expand" onclick="$('#clientes-ativos').show();$('#clientes-premiados').hide()">Clientes ativos</button></div>
+		<div class="small-6 columns"><button class="small success expand" onclick="$('#clientes-premiados').show();$('#clientes-ativos').hide()">Clientes premiados</button></div>
+		
+	</div>
+	<!--  PROTOTIPO CAMPANHA ATIVA END-->
+	
+	<table width="100%" id="clientes-ativos" style="display:none">
+		<thead>
+			<td>Usuário</td>
+			<td>Qtde</td>
+			<td>Ult. Ref</td>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Luiz</td>
+				<td>10</td>
+				<td>01/04/2016</td>
+			</tr>
+			<tr>
+				<td>André</td>
+				<td>4</td>
+				<td>03/09/2016</td>
+			</tr>
+			<tr>
+				<td>Joao</td>
+				<td>3</td>
+				<td>01/04/2016</td>
+			</tr>
+			<tr>
+				<td>Lucas</td>
+				<td>6</td>
+				<td>01/04/2016</td>
+			</tr>
+			
+		</tbody>
+	</table>
+	
+	<table width="100%" id="clientes-premiados" style="display:none">
+		<thead>
+			<td>Usuário</td>
+			
+			<td>Utilizado</td>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Roberto Campos</td>
+				<td>15/09/2016</td>
+			</tr>
+			<tr>
+				<td>Jucelino</td>
+				<td>03/04/2016</td>
+			</tr>
+			<tr>
+				<td>Maria</td>
+				<td>01/09/2016</td>
 
-	
-	<div  class="row cadastro-restaurante hide">
-		<div class="small-12 columns">
-			<h1>Informe os dados do restaurante</h1>
-		</div>
+			</tr>
+			<tr>
+				<td>Lucas</td>
+				<td>01/04/2016</td>
+			</tr>
+			
+		</tbody>
+	</table>
 		
-		<div class="small-12 columns">
-			<label>Nome: <input type="text" name="nome" id="nome"/>
-			
-			</label>
-			
-		</div>
-		<div class="small-12 columns">
-			<label>CNPJ: <input type="text" name="cnpj" id="cnpj" />
-			
-			</label>
-			
-		</div>
-		<div class="small-12 columns">
-			<label>Estado: <input type="text" name="estado" id="estado"/>
-			
-			</label>
-			
-		</div>
-		<div class="small-12 columns">
-			<label>Cidade: <input type="text" name="cidade" id="cidade"/>
-			
-			</label>
-			
-		</div>
-		<div class="small-12 columns">
-			<label>Endereço: <input type="text" name="endereco" id="endereco"/>
-			
-			</label>
-			
-		</div>
-		
-		<div class="small-12 columns">
-			<label>Telefone: <input type="text" name="telefone" id="telefone"/>
-			
-			</label>
-			
-		</div>
-		
-		<div class="small-12 columns">
-			<button style="buttom expanded">Cadastrar Restaurante</button>
-		</div>
-	</div>
-		
-	</div>
-	
 	<script type="text/javascript" src="cordova.js"></script>
-   
 	<script src="js/vendor/jquery.js"></script>
 	<script src="js/foundation.min.js"></script>
 	<script src="js/foundation/foundation.offcanvas.js"></script>
@@ -238,11 +227,11 @@
 				$("#menu-user-consumidor").show();
 			}
 			
-			$("#name_user").html("Bem vindo:" + parsedInfo[1]);
+			$("#name_user").html("Bem vindo: " + parsedInfo[1]);
 			
 			if(tipoUser == 2){
 			
-				$.post("https://fidelizefood-backend-luizeg.c9users.io/public_html/index.php",
+				$.post("http://fidelizefood.azurewebsites.net/public_html/index.php",
 					{
 						req : "consultarestaurante",
 						user_id : parsedInfo[0]
@@ -252,10 +241,9 @@
 						var obj = $.parseJSON(response);
 						
 						if(obj.status == "ok"){
-							//alert("Restaurante já informado");
-							$(".cadastro-restaurante").hide();
 							
-							$("body").append("<br /><button class='expand' onclick='window.location.href =\"campanha.html\"; '>Cadastrar campanha</button>");
+							$("body").append("<br /> " +
+								"<div class='row'><button class='expand' onclick='window.location.href =\"cadastrocampanha.html\"; '>Cadastrar campanha</button></div>");
 						}
 						else{
 							//alert("Restaurante não informado ainda");

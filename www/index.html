@@ -88,9 +88,11 @@
 		</form>
 		</div>
 		<!--position:absolute;background:#545487;bottom:0px-->
+		<div class="row">
 			<div class="small-12 columns" align="center" style="margin-top:-18px">
 				<button style="background-color:#545487;color:white" class="small button expand" onclick="cadastrarUser()">CADASTRAR</button>				
 			</div>
+		</div>
 		
 	</div>
 	<script type="text/javascript" src="cordova.js"></script>
@@ -121,8 +123,8 @@
 			$("#wait").removeClass("hide");
 			$("#form-login").css("opacity",0.3);
 			
-			$.post("https://fidelizefood-backend-luizeg.c9users.io/public_html/index.php",
-			//$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php",
+			$.post("http://fidelizefood.azurewebsites.net/public_html/index.php",
+			//$.post("http://teste/fidelizefood-backend/public_html/index.php",
 			
 				{
 					req : "login",
@@ -130,13 +132,14 @@
 					pass : $("#pass").val()
 				},
 				function(response){
-
+					
 					var obj = $.parseJSON(response);
 
 					if(obj.status == "!ok"){
 						alert("Não foi possivel acessar, usuário ou senha inválidos");
 						$("#wait").addClass("hide");
 						$("#form-login").css("opacity",1);
+						
 					}
 					else{
 
@@ -147,7 +150,11 @@
 						window.location.href = "main.html";
 					}
 				}
-			);
+			).fail(function(xhr, textStatus, errorThrown) { 
+				alert("Não foi possível se conectar") 
+				$("#wait").addClass("hide");
+				$("#form-login").css("opacity",1);
+			});
 		}
 
 		function init(){

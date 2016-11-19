@@ -52,8 +52,6 @@
 
 <body>
 
-	<form data-abide="ajax" id="frmCadastroUser">
-
 		<div class="row">
   
 			<div style="background:#521474;margin-bottom:5px" class="small-12 columns panel" align="center">
@@ -63,7 +61,7 @@
 			<div style="background:white;" class="small-12 columns panel" align="center">
 				<h1 style="color:#521474">Cadastro de usuário</h1>
 			</div>
-			
+			<form data-abide="ajax" id="frmCadastroUser">
 			<div class="small-12 large-6 columns name-field">
 				<label for="user"> Nome:
 					<input type="text" name="name" id="name" placeholder="Digite seu nome completo..." required pattern="[a-zA-Z]+"/>
@@ -78,15 +76,18 @@
 				</label>
 				<small class="error">Endereço de e-mail é requerido.</small>
 			</div>
-
+	
 			<div class="small-12 large-6 columns">
-				<label for="tipo"> Tipo:
-					<select name="tipo" id="tipo" placeholder="Escolha uma opção..." required>
-					    <option value="" disabled selected hidden>Selecione uma opção...</option>
-						<option value="1">Consumidor</option>
-						<option value="2">Fornecedor</option>
-					</select>
-				</label>
+				<label>Tipo:</label>
+			</div>
+			
+			<div class="small-6 large-6 columns">
+			
+				<label><input type="radio" name="tipo" id="tipo" value="1" checked/> Consumidor</label>
+			</div>
+			<div class="small-6 large-6 columns">
+				<label><input type="radio" name="tipo" id="tipo" /> Fornecedor</label>
+				
 				<small class="error">Tipo de conta é requerido.</small>
 			</div>
 
@@ -113,14 +114,12 @@
 
 			<div class="small-12 large-6 columns">
 				<!--<input type="submit" onclick="enviar()" class="button radius expand"/>-->
-				<button type="submit" class="expand">Enviar</button>
+				<button type="submit" class="expand small">Enviar</button>
 				
 			</div>
+			</form>
 
 		</div>
-
-	</form>
-
 
 	<script type="text/javascript" src="cordova.js"></script>
 	<script src="js/vendor/jquery.js"></script>
@@ -131,7 +130,7 @@
 
 		$(document).foundation();
 
-		$('#frmCadastroUser').on('valid.fndtn.abide', function() {
+		$('#frmCadastroUser').on('valid.fndtn.abide', function(e) {
 		  // Handle the submission of the form
 			if(e.namespace != 'abide.fndtn') {
 				return;
@@ -153,7 +152,7 @@
 			user.user  = $("#user").val();
 			user.req   = "cadastrouser";
 
-			$.post("https://fidelizefood-backend-luizeg.c9users.io/public_html/index.php", 
+			$.post("http://fidelizefood.azurewebsites.net/public_html/index.php", 
 				user,
 				function(response){
 	
