@@ -15,12 +15,11 @@
 	<link rel="stylesheet" href="css/app.css">
 	<script src="js/vendor/modernizr.js"></script>
 	
-
 </head>
 
 <body>
 	
-	<form data-abide="ajax" id="carimboForm">
+	<form data-abide="ajax" id="restauranteForm">
 	
 		<div class="row">
 			
@@ -83,7 +82,7 @@
 			</div>
 			
 			<div class="small-12 large-6 columns">
-					<input type="submit" onclick="enviar()" class="button radius expand"/>
+					<input type="submit" class="button radius expand"/>
 			</div>
 		</div>
 	
@@ -97,7 +96,14 @@
 	<script type="text/javascript">
 
 		$(document).foundation();
-			
+		
+		$('#restauranteForm').on('valid.fndtn.abide', function(e) {
+			// Handle the submission of the form
+			if(e.namespace != 'abide.fndtn') {
+				  return;
+			}
+			enviar();
+		});
 		
 		function enviar(){
 			
@@ -115,17 +121,7 @@
 			rest.idusuario = parsedInfo[0];
 			rest.req   = "cadastrorestaurant";
 			
-			/*FAZER UMA VALIDAÇÃO NO FORM*/
-			$("input, select").each(function(){
-				
-				
-				if($(this).val() == "" ){
-					//$(this).parent("label").addClass("error");
-				}
-			
-			});
-			
-			//$.post("http://softprevirpps/code/public_html/index.php",
+			//$.post("http://teste/fidelizefood-backend/public_html/index.php", rest,
 			
 			$.post("http://fidelizefood.azurewebsites.net/public_html/index.php", rest, 
 				function(response){

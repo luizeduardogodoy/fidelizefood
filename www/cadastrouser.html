@@ -82,13 +82,10 @@
 			</div>
 			
 			<div class="small-6 large-6 columns">
-			
-				<label><input type="radio" name="tipo" id="tipo" value="1" checked/> Consumidor</label>
+				<label><input type="radio" name="tipo" id="tipo1" value="1" checked/> Consumidor</label>
 			</div>
 			<div class="small-6 large-6 columns">
-				<label><input type="radio" name="tipo" id="tipo" /> Fornecedor</label>
-				
-				<small class="error">Tipo de conta é requerido.</small>
+				<label><input type="radio" name="tipo" id="tipo2"  value="2" /> Fornecedor</label>
 			</div>
 
 			<div class="small-12 large-6 columns">
@@ -142,12 +139,21 @@
 		});
 		
 		function enviar(){
-
+			
+			var tipo = "";
+			
+			$('input[type="radio"]').each(function(){
+				if($(this).prop("checked")){
+					tipo = $(this).val();
+				}
+					
+			});
+			
 			var user = {};
 
 			user.name  = $("#name").val();
 			user.email = $("#email").val();
-			user.tipo  = $("#tipo").val();
+			user.tipo  = tipo;
 			user.pass  = $("#pass").val();
 			user.user  = $("#user").val();
 			user.req   = "cadastrouser";
