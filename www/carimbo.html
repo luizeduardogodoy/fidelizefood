@@ -51,11 +51,12 @@
 </head>
 
 <body>
+	
 	<div class="row" id="menu-user-consumidor" style="display:none">
 		<nav class="top-bar" data-topbar role="navigation" style="background:#521474">
 			<ul class="title-area">
 				<li class="name">
-					<h1><a href="#">FIDELIZEFOOD</a></h1>
+					<h1><a href="#">FIDELIZEFOOD - CLIENTE</a></h1>
 				</li>
 				
 				<!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
@@ -84,10 +85,10 @@
 	</div>
 	
 	<div class="row" id="menu-user-fornecedor" style="display:none">
-		<nav class="top-bar" data-topbar role="navigation" style="background:#301174">
+		<nav class="top-bar" data-topbar role="navigation" style="background:#521474">
 			<ul class="title-area">
 				<li class="name">
-					<h1><a href="#">FIDELIZEFOOD</a></h1>
+					<h1><a href="main.html">FIDELIZEFOOD</a></h1>
 				</li>
 				
 				<!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
@@ -109,35 +110,77 @@
 
 				<!-- Left Nav Section -->
 				<ul class="left">
-					<li><a href="#">Left Nav Button</a></li>
+					<li><a href="#" onclick="$('#campanha_ativa').show()">Campanha ativa</a></li>
 				</ul>
 		  </section>
 		</nav>		
 	</div>
-
-	<div class="row">
+	
+	<form data-abide="ajax" id="carimboForm">
+		<div class="row">
 		
-		<form data-abide="ajax" id="carimboForm">
 			<div class="small-12 large-6 columns">	
-				<label for="user">Registre o carimbo:
+				<label for="cpf">Registre o carimbo:
 					<input type="text" name="cpf" id="cpf" placeholder="Digite o cpf do cliente para registrar carimbo..." required/>
 				</label>				
 				<small class="error">CPF válido requerido para registro.</small>
 			</div>
 			<div class="small-12 large-6 columns">
-					<input type="submit" onclick="Registrar" class="button radius expand"/>
+				<input type="submit" class="button radius expand" />
 			</div>
-		</form>
-	</div>
-	
-	
+		
+		</div>
+	</form>
 	<script type="text/javascript" src="cordova.js"></script>
 	<script src="js/vendor/jquery.js"></script>
 	<script src="js/foundation.min.js"></script>
 	<script src="js/foundation/foundation.topbar.js"></script>
+	
 	<script type="text/javascript">
 
 		$(document).foundation();
+		
+		var  tipoUser = null;
+		
+		$('#carimboForm').on('valid.fndtn.abide', function(e) {
+		  // Handle the submission of the form
+			if(e.namespace != 'abide.fndtn') {
+			
+			  return;
+			}
+			registrar();
+		});
+		
+		function registrar(){
+			
+			var retrieveInfo = window.sessionStorage.getItem("info");
+			var parsedInfo = JSON.parse(retrieveInfo);
+			
+			var dados = {};
+					
+			dados.req = "carimbo";
+			dados.iduserlogado = parsedInfo[0];
+			dados.idusercliente = $("#cpf").val();
+			
+			//$.post("http://softprevirpps/code/public_html/index.php",
+			
+			$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php", dados, 
+				function(response){
+					
+					var obj = $.parseJSON(response);
+					alert (obj);
+
+					if(obj.status == "!ok" ){
+						alert("Não foi possivel registrar");
+					}
+					else{
+						alert("Registro efetuado com sucesso!");
+						
+					}
+				}
+			);
+			
+		}
 		
 		function init(){
 			
@@ -153,29 +196,6 @@
 			else{
 				$("#menu-user-consumidor").show();
 			}
-			
-			//$.post("http://softprevirpps/code/public_html/index.php",
-			
-			$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php", rest, 
-				function(response){
-					
-					var obj = $.parseJSON(response);
-					alert (obj);
-
-					if(obj.status == "!ok" ){
-						alert("Não foi possivel cadastrar o restaurante");
-					}
-					else{
-						alert("Restaurante cadastrado com sucesso!");
-						
-						var details = new Array();
-						details = [$("#nomeFantasia").val(), $("#cnpj").val(),$("#phone").val()];
-						window.sessionStorage.setItem("info", JSON.stringify(details));
-					
-						window.location.href = "index.html";
-					}
-				}
-			);
 			
 			mudar();
 		}
