@@ -164,18 +164,20 @@
 			
 			//$.post("http://softprevirpps/code/public_html/index.php",
 			
-			$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php", dados, 
+			$.post("http://fidelizefood.azurewebsites.net/public_html/index.php", dados, 
 				function(response){
 					
 					var obj = $.parseJSON(response);
-					alert (obj);
-
+					
 					if(obj.status == "!ok" ){
-						alert("Não foi possivel registrar");
+					
+						if(obj.mensagem != undefined)
+							alert(obj.mensagem);						
+						else
+							alert("Não foi possivel registrar");
 					}
 					else{
-						alert("Registro efetuado com sucesso!");
-						
+						alert(obj.mensagem);						
 					}
 				}
 			);

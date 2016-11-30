@@ -230,7 +230,8 @@
 			$("#name_user").html("Bem vindo: " + parsedInfo[1]);
 			
 			if(tipoUser == 2){
-			
+				
+				//$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php",
 				$.post("http://fidelizefood.azurewebsites.net/public_html/index.php",
 					{
 						req : "consultarestaurante",
