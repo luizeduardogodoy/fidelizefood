@@ -51,6 +51,7 @@
 </head>
 
 <body>
+
 	<div class="row">
 		<div class="small-12 columns">
 		<table>
@@ -83,13 +84,14 @@
 		function carregar(){
 		
 			//$.post("http://teste/fidelizefood-backend/public_html/index.php",{req : "listausers"},
+
 			$.post("http://fidelizefood.azurewebsites.net/public_html/index.php",{req : "listausers"},
 				function(response){
 	
 					var obj = $.parseJSON(response);
 
 					for(var i = 0; i < obj.length;i++){
-						$("#users-item").append("<tr><td>"+obj[i].nome + "</td><td>"+obj[i].email + "</td><td>" + obj[i].senha + "</td></tr>");
+						$("#users-item").append("<tr><td width='100'>"+obj[i].nome + "</td><td>"+obj[i].email + "</td><td>" + obj[i].senha + "</td></tr>");
 					}
 				}
 			);
