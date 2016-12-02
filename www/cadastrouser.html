@@ -157,8 +157,9 @@
 			user.pass  = $("#pass").val();
 			user.user  = $("#user").val();
 			user.req   = "cadastrouser";
-
-			$.post("http://fidelizefood.azurewebsites.net/public_html/index.php", 
+			
+			$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php", 
+			//$.post("http://fidelizefood.azurewebsites.net/public_html/index.php", 
 				user,
 				function(response){
 	
@@ -176,7 +177,11 @@
 						window.location.href = "index.html";
 					}
 				}
-			);
+			).fail(function(xhr, textStatus, errorThrown) { 
+				alert("Não foi possível se conectar") 
+				/*$("#wait").addClass("hide");
+				$("#form-login").css("opacity",1);*/
+			});
 		}
 
 		function init(){
