@@ -195,6 +195,10 @@
 			
 		</tbody>
 	</table>
+	<div class="row">
+		<table id="listaCampanhas">
+		</table>
+	</div>
 		
 	<script type="text/javascript" src="cordova.js"></script>
 	<script src="js/vendor/jquery.js"></script>
@@ -253,20 +257,53 @@
 					
 				});
 			}
-		}
 
-		function alertSession(){			
-			if(tipoUser == 0){
-				alert("Usuário Logado é restaurante");
+			if(tipoUser == 1){
+				listaRestaurantes(parsedInfo[0]);
 			}
-			else{
-				alert("Usuário Logado é consumidor");
-			}			
+
 		}
 
 		function mudar(){
 			StatusBar.show();
 			StatusBar.backgroundColorByHexString("#ff4500");
+		}
+
+		function listaRestaurantes(user){
+
+			//	$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php",
+			$.post("http://fidelizefood.azurewebsites.net/public_html/index.php",
+				{
+					req : "listarestativos",
+					user_id : user
+				}, 
+				function(response){
+					
+					var obj = $.parseJSON(response);
+					
+					if(obj.status == "ok"){
+
+						$("#listaCampanhas").html("<thead> <th width='150'>Restaurante</th> <th>Nº Ref</th> <th>Qtde</th> <th>Última</th> </thead> <tbody>");
+
+						for(var i = 0; i < obj.registros.length; i++){
+							
+							$("#listaCampanhas").append("<tr><td>" + obj.registros[i].nomeRest + "</td>" +
+								"<td>" + obj.registros[i].refeicoes + "</td>" + 
+								"<td>" + obj.registros[i].qtde + "</td> " +
+								"<td>" + obj.registros[i].ultima  + "</td> " +
+								"</tr>");
+							
+						}
+
+						$("#listaCampanhas").append("</tbody>");
+						$("#listaCampanhas").append("<tfoot><tr><td><span onclick='listaRestaurantes("+ user +")'>Atualizar</span></tr></td></tfoot>");
+					}
+					else{
+						alert("Ocorreu algum problema!");
+					}						
+				
+			});
+
 		}
 
 		document.addEventListener('deviceready', init, false);
