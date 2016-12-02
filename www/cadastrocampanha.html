@@ -52,7 +52,7 @@
 
 <body>
 
-	<form data-abide="ajax" id="frmCadastroCampanha">
+	<form data-abide="ajax" id="frmcadastrocampanha">
 
 		<div class="row">
   
@@ -124,7 +124,7 @@
 
 		$(document).foundation();
 
-		$('#frmCadastroCampanha').on('valid.fndtn.abide', function(e) {
+		$('#frmcadastrocampanha').on('valid.fndtn.abide', function(e) {
 		  // Handle the submission of the form
 			if(e.namespace != 'abide.fndtn') {
 				return;
@@ -149,12 +149,11 @@
 			campanha.qtd  = $("#qtd").val();
 			campanha.obs  = $("#obs").val();
 			campanha.idRestaurante = parsedInfo[0];
-			campanha.campanha  = $("#campanha").val();
+			//campanha.campanha  = $("#campanha").val();
 			campanha.req   = "cadastrocampanha";
 			
 			//$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php", 
-			$.post("http://localhost:8080/public_html/index.php", 
-				campanha,
+			$.post("http://localhost:8080/public_html/index.php",campanha,
 				function(response){
 	
 					var obj = $.parseJSON(response);
@@ -163,12 +162,8 @@
 						alert("Não foi possivel cadastrar a campanha");
 					else{
 						alert("Campanha cadastrada com sucesso, caso necessário verifique as informações da campanha");
-
-						var details = new Array();
-						details = [$("#campanha").val(), $("#nomeCampanha").val()];
-						window.sessionStorage.setItem("infoCampanha", JSON.stringify(details));
-
-						window.location.href = "index.html";
+						
+						window.location.href = "main.html";
 					}
 				}
 			).fail(function(xhr, textStatus, errorThrown) { 
