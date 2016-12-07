@@ -60,11 +60,11 @@
 		</div>
 		<div class="row" id="form-login">
 		<form data-abide="ajax" id="loginPage">
-		
+
 			<div style="background:white;margin-bottom:60px" class="small-12 columns panel" align="center">
 				<h1 style="color:#521474">FIDELIZEFOOD</h1>
 			</div>
-			
+
 			<div class="small-12 large-6 columns">
 				<label for="user"> Usuário:
 					<input type="text" id="user" placeholder="Digite seu usuário de acesso..." required/>
@@ -78,22 +78,22 @@
 				</label>
 				<small class="error">Senha é requerida.</small>
 			</div>
-			
+
 			<!--style="position:absolute;background:#521474;bottom:70px-->
 			<div class="small-12 columns" align="center" >
 				<!--<button style="background-color:#521474;color:white" class="small button expand" onclick="login()">ENTRAR</button>-->
 				<button type="submit" class="expand small">ENVIAR</button>
 			</div>
-			
+
 		</form>
 		</div>
 		<!--position:absolute;background:#545487;bottom:0px-->
 		<div class="row">
 			<div class="small-12 columns" align="center" style="margin-top:-18px">
-				<button style="background-color:#545487;color:white" class="small button expand" onclick="cadastrarUser()">CADASTRAR</button>				
+				<button style="background-color:#545487;color:white" class="small button expand" onclick="cadastrarUser()">CADASTRAR</button>
 			</div>
 		</div>
-		
+
 	</div>
 	<script type="text/javascript" src="cordova.js"></script>
 	<script src="js/vendor/jquery.js"></script>
@@ -101,11 +101,11 @@
 	<script src="js/foundation/foundation.topbar.js"></script>
 
 	<script type="text/javascript">
-		
+
 		$(document).foundation();
-		
+
 		//window.location.href = 'users.html';
-		
+
 		$('#loginPage').on('valid.fndtn.abide', function(e) {
 		  // Handle the submission of the form
 			 if(e.namespace != 'abide.fndtn') {
@@ -121,27 +121,27 @@
 				return;
 			}
 
-			
+
 			$("#wait").removeClass("hide");
 			$("#form-login").css("opacity",0.3);
-			
-			$.post("http://fidelizefood.azurewebsites.net/public_html/index.php",
-			//$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php",
-			
+
+			//$.post("http://fidelizefood.azurewebsites.net/public_html/index.php",
+			$.post("http://teste/fidelizefood-backend/public_html/index.php",
+
 				{
 					req : "login",
 					user : $("#user").val(),
 					pass : $("#pass").val()
 				},
 				function(response){
-					
+
 					var obj = $.parseJSON(response);
 
 					if(obj.status == "!ok"){
 						alert("Não foi possivel acessar, usuário ou senha inválidos");
 						$("#wait").addClass("hide");
 						$("#form-login").css("opacity",1);
-						
+
 					}
 					else{
 
@@ -152,8 +152,8 @@
 						window.location.href = "main.html";
 					}
 				}
-			).fail(function(xhr, textStatus, errorThrown) { 
-				alert("Não foi possível se conectar") 
+			).fail(function(xhr, textStatus, errorThrown) {
+				alert("Não foi possível se conectar")
 				$("#wait").addClass("hide");
 				$("#form-login").css("opacity",1);
 			});
