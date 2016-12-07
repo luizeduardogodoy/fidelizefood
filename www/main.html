@@ -248,19 +248,23 @@
 						
 						var obj = $.parseJSON(response);
 						
-						if(obj.status == "ok"){
+						if (obj.status == "ok"){
 							
+							consultaCampanha();
+							
+						} else if (obj.status == "!campanha"){
+
 							$("body").append("<br /> " +
 								"<div class='row'><button class='expand' onclick='window.location.href =\"cadastrocampanha.html\"; '>Cadastrar campanha</button></div>");
-						}
-						else{
+						
+						} else {
+							
 							//alert("Restaurante não informado ainda");
 							window.location.href = "cadastrorestaurante.html";
+							
 						}
-					
+						
 				});
-				
-				consultaCampanha();
 			}
 
 			if(tipoUser == 1){
@@ -326,6 +330,8 @@
 						$("#campanha_ativa").prepend("<div class='small-12 columns'><b>Início:</b> " + obj.datainicial + " <b>Término:</b> " + obj.datainicial + " </div>");	
 						$("#campanha_ativa").prepend("<div class='small-12 columns'><b>Qtde Refeição:</b>" + obj.qtde + "</div>");	
 						$("#campanha_ativa").prepend("<div class='small-12 columns'><b>Nome:</b>" + obj.nomecampanha + "</div>");
+						
+						$('#campanha_ativa').show()
 					
 					}
 			});
