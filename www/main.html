@@ -188,8 +188,8 @@
 
 			if(tipoUser == 2){
 
-				//$.post("http://teste/fidelizefood-backend/public_html/index.php",
-				$.post("http://fidelizefood.azurewebsites.net/public_html/index.php",
+				$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php",
+				//$.post("http://fidelizefood.azurewebsites.net/public_html/index.php",
 					{
 						req : "consultarestaurante",
 						user_id : parsedInfo[0]
@@ -231,7 +231,7 @@
 
 		function listaRestaurantes(user){
 			$("#listaCampanhas").css("opacity",0.2);
-				$.post("http://teste/fidelizefood-backend/public_html/index.php",
+				$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php",
 			//$.post("http://fidelizefood.azurewebsites.net/public_html/index.php",
 				{
 					req : "listarcampanhaspart",
@@ -272,7 +272,7 @@
 			
 			//$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php",
 			//$.post("http://fidelizefood.azurewebsites.net/public_html/index.php",
-			$.post("http://teste/fidelizefood-backend/public_html/index.php", {req : "consultacampanha"},
+			$.post("http://fidelizefood.azurewebsites.net/public_html/index.php", {req : "consultacampanha"},
 				function(response){
 					
 					var obj = $.parseJSON(response);
@@ -280,7 +280,7 @@
 					if(obj.status == "ok"){
 									
 						$("#campanha_ativa").prepend("<div class='small-12 columns' style='padding-bottom:25px'><b>Obs:</b>" + obj.observacao + "</div>");
-						$("#campanha_ativa").prepend("<div class='small-12 columns'><b>Início:</b> " + obj.datainicial + " <b>Término:</b> " + obj.datainicial + " </div>");	
+						$("#campanha_ativa").prepend("<div class='small-12 columns'><b>Início:</b> " + obj.datainicial + " <b>Término:</b> " + obj.datafinal + " </div>");	
 						$("#campanha_ativa").prepend("<div class='small-12 columns'><b>Qtde Refeição:</b>" + obj.qtde + "</div>");	
 						$("#campanha_ativa").prepend("<div class='small-12 columns'><b>Nome:</b>" + obj.nomecampanha + "</div>");
 						
