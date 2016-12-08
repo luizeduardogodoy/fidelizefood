@@ -133,62 +133,11 @@
 	<!--  PROTOTIPO CAMPANHA ATIVA END-->
 
 	<table width="100%" id="clientes-ativos" style="display:none">
-		<thead>
-			<td>Usuário</td>
-			<td>Qtde</td>
-			<td>Ult. Ref</td>
-		</thead>
-		<tbody>
-			<tr>
-				<td>Luiz</td>
-				<td>10</td>
-				<td>01/04/2016</td>
-			</tr>
-			<tr>
-				<td>André</td>
-				<td>4</td>
-				<td>03/09/2016</td>
-			</tr>
-			<tr>
-				<td>Joao</td>
-				<td>3</td>
-				<td>01/04/2016</td>
-			</tr>
-			<tr>
-				<td>Lucas</td>
-				<td>6</td>
-				<td>01/04/2016</td>
-			</tr>
-
-		</tbody>
+		
 	</table>
 
 	<table width="100%" id="clientes-premiados" style="display:none">
-		<thead>
-			<td>Usuário</td>
-
-			<td>Utilizado</td>
-		</thead>
-		<tbody>
-			<tr>
-				<td>Roberto Campos</td>
-				<td>15/09/2016</td>
-			</tr>
-			<tr>
-				<td>Jucelino</td>
-				<td>03/04/2016</td>
-			</tr>
-			<tr>
-				<td>Maria</td>
-				<td>01/09/2016</td>
-
-			</tr>
-			<tr>
-				<td>Lucas</td>
-				<td>01/04/2016</td>
-			</tr>
-
-		</tbody>
+		
 	</table>
 	<div class="row">
 		<table id="listaCampanhas">
@@ -335,8 +284,40 @@
 						$("#campanha_ativa").prepend("<div class='small-12 columns'><b>Qtde Refeição:</b>" + obj.qtde + "</div>");	
 						$("#campanha_ativa").prepend("<div class='small-12 columns'><b>Nome:</b>" + obj.nomecampanha + "</div>");
 						
-						$('#campanha_ativa').show()
+						$('#campanha_ativa').show();
+						
+						//fidelizados
+						$("#clientes-ativos").html("<thead> <th width='150'>Usuário</th> <th>Nº Ref</th> <th>Última Ref</th> </thead> <tbody>");
+
+						for(var i = 0; i < obj.registrosativos.length; i++){
+
+							$("#clientes-ativos").append("<tr><td>" + obj.registrosativos[i].nome + "</td>" +
+								"<td>" + obj.registrosativos[i].refeicoes + "</td> " +
+								"<td>" + obj.registrosativos[i].ultima  + "</td> " +
+								"</tr>");
+
+						}
+
+						$("#clientes-ativos").append("</tbody>");
+						$("#clientes-ativos").append("<tfoot><tr><td><span onclick='consultaCampanha()'>Atualizar</span></tr></td></tfoot>");
+
+						$("#clientes-ativos").css("opacity",1);
 					
+						// premiados
+						$("#clientes-premiados").html("<thead> <th width='150'>Usuário</th> <th>Utilizado</th> </thead> <tbody>");
+
+						for(var i = 0; i < obj.registrospremiados.length; i++){
+
+							$("#clientes-premiados").append("<tr><td>" + obj.registrospremiados[i].nome + "</td>" +
+								"<td>" + obj.registrospremiados[i].utilizado + "</td> " +
+								"</tr>");
+
+						}
+
+						$("#clientes-premiados").append("</tbody>");
+						$("#clientes-premiados").append("<tfoot><tr><td><span onclick='consultaCampanha()'>Atualizar</span></tr></td></tfoot>");
+
+						$("#clientes-premiados").css("opacity",1);
 					}
 			});
 		}
