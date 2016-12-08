@@ -125,6 +125,7 @@
 
 	<!--  PROTOTIPO CAMPANHA ATIVA BEGIN-->
 	<div class="row" id="campanha_ativa" style="display:none;background:#ddd;padding:10px">
+<<<<<<< HEAD
 		<div class="small-12 columns"><b>Nome:</b> Fidelidade 2016</div>
 		<div class="small-12 columns"><b>Qtde Refeição:</b> 15</div>
 		<div class="small-12 columns"><b>Início:</b> 01/01/2016 <b>Término:</b> 31/12/2016</div>
@@ -134,6 +135,11 @@
 		<div class="small-6 columns"><button class="small expand" onclick="$('#clientes-ativos').show();$('#clientes-premiados').hide()">Clientes ativos</button></div>
 		<div class="small-6 columns"><button class="small success expand" onclick="$('#clientes-premiados').show();$('#clientes-ativos').hide()">Clientes premiados</button></div>
 
+=======
+		
+		<div class="small-6 columns"><button class="small expand" onclick="$('#clientes-ativos').show();$('#clientes-premiados').hide()">Clientes ativos</button></div>
+		<div class="small-6 columns"><button class="small success expand" onclick="$('#clientes-premiados').show();$('#clientes-ativos').hide()">Clientes premiados</button></div>		
+>>>>>>> 7a8b56ce68db9a5721fcd00de4e0a02df4fcfa2c
 	</div>
 	<!--  PROTOTIPO CAMPANHA ATIVA END-->
 
@@ -219,8 +225,18 @@
 
 		function init(){
 			var retrieveInfo = window.sessionStorage.getItem("info");
+			
+			var retrieveInfoCampanha = window.sessionStorage.getItem("infocampanha");
+			
 			var parsedInfo = JSON.parse(retrieveInfo);
 
+			
+			var parsedInfoCampanha = JSON.parse(retrieveInfoCampanha);
+			
+			if (retrieveInfoCampanha != null){
+				$('#campanha_ativa').show()
+			} 
+				
 			tipoUser = parsedInfo[2];
 
 			//abre o menu específico para o tipo de usuario logado
@@ -245,14 +261,21 @@
 
 						var obj = $.parseJSON(response);
 
-						if(obj.status == "ok"){
+						
+						if (obj.status == "ok"){
+							
+							consultaCampanha();
+							
+						} else if (obj.status == "!campanha"){
 
 							$("body").append("<br /> " +
 								"<div class='row'><button class='expand' onclick='window.location.href =\"cadastrocampanha.html\"; '>Cadastrar campanha</button></div>");
-						}
-						else{
+						
+						} else {
+							
 							//alert("Restaurante não informado ainda");
 							window.location.href = "cadastrorestaurante.html";
+							
 						}
 
 				});
@@ -306,6 +329,28 @@
 
 			});
 
+		}
+		
+		function consultaCampanha(){
+			
+			//$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php",
+			//$.post("http://fidelizefood.azurewebsites.net/public_html/index.php",
+			$.post("http://localhost:8080/public_html/index.php", {req : "consultacampanha"},
+				function(response){
+					
+					var obj = $.parseJSON(response);
+						
+					if(obj.status == "ok"){
+									
+						$("#campanha_ativa").prepend("<div class='small-12 columns' style='padding-bottom:25px'><b>Obs:</b>" + obj.observacao + "</div>");
+						$("#campanha_ativa").prepend("<div class='small-12 columns'><b>Início:</b> " + obj.datainicial + " <b>Término:</b> " + obj.datainicial + " </div>");	
+						$("#campanha_ativa").prepend("<div class='small-12 columns'><b>Qtde Refeição:</b>" + obj.qtde + "</div>");	
+						$("#campanha_ativa").prepend("<div class='small-12 columns'><b>Nome:</b>" + obj.nomecampanha + "</div>");
+						
+						$('#campanha_ativa').show()
+					
+					}
+			});
 		}
 
 		document.addEventListener('deviceready', init, false);
