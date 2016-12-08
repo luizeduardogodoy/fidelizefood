@@ -88,9 +88,27 @@
 		</nav>		
 	</div>
 	
-		<div class="row hide" id="wait" align="center" style="position:absolute;margin-top:0;z-index:99" >
+		<div class="row hide" id="dtfimmaiordtini" align="center" style="position:absolute;margin-top:0;z-index:99" >
 			<div class="small-12 columns warning label" style="padding:20px">
 				<div>"Data Fim" não pode ser menor que "Data Início"</div>
+			</div>
+		</div>
+		
+		<div class="row hide" id="dtinimenorhoje" align="center" style="position:absolute;margin-top:0;z-index:99" >
+			<div class="small-12 columns warning label" style="padding:20px">
+				<div>"Data Início" não pode ser menor que a data atual</div>
+			</div>
+		</div>
+		
+		<div class="row hide" id="cadastrofail" align="center" style="position:absolute;margin-top:0;z-index:99" >
+			<div class="small-12 columns warning label" style="padding:20px">
+				<div>Houve falha no cadastro da campanha, contacte o administrador do aplicativo</div>
+			</div>
+		</div>
+		
+		<div class="row hide" id="cadastrosucesso" align="center" style="position:absolute;margin-top:0;z-index:99" >
+			<div class="small-12 columns success label" style="padding:20px">
+				<div>Cadastro de campanha efetuado com sucesso</div>
 			</div>
 		</div>
 	
@@ -167,6 +185,7 @@
 			}
 		  
 		  enviar();
+		  
 		});
 		
 		
@@ -177,34 +196,47 @@
 			window.location.href = "main.html"; 
 		}
 		
+		
 		// Validando range de data
 		$( "input[type='date']" ).change(function() {
 		
-		alert($("#dtInicio").val());
-		alert(new Date());
-			date1 = Date.parse($("#dtInicio").val());
-			date2 = Date.parse($("#dtFim").val());
+			dtini = Date.parse($("#dtInicio").val());
+			dtfm = Date.parse($("#dtFim").val());
 			
-			dateactual = new Date().getTime();
+			// primeiro valido so data inicial
+			if ($.isNumeric(dtini)){
+				
+				// recuperando a data atual no mesmo formato das datas
+				dateactual = new Date().toISOString().slice(0,10);
+				dtiniformat = new Date(Date.parse($("#dtInicio").val())).toISOString().slice(0,10);
+				
+				if (dtiniformat < dateactual) {
 						
-			if ($.isNumeric(date1) && $.isNumeric(date2)) {
-			
-			
-				if($("#dtInicio").val() < dateactual){
-				alert();
+					$("#dtinimenorhoje").removeClass("hide");
+					$("#form-campanha").css("opacity",0.3);
+					
+					window.setTimeout(function(){
+						$("#dtInicio").val("");
+						$("#dtinimenorhoje").addClass("hide");
+						$("#form-campanha").css("opacity",1);
+					}, 3000);
 				}
 		
-				if (date1 > date2) {
+			// depois valido data inicial com data final
+			} 
+
+			if ($.isNumeric(dtini) && $.isNumeric(dtfm)) {
 						
-					$("#wait").removeClass("hide");
+				if (dtini > dtfm) {
+						
+					$("#dtfimmaiordtini").removeClass("hide");
 					$("#form-campanha").css("opacity",0.3);
 					
 					window.setTimeout(function(){
 						$("#dtFim").val("");
-						$("#wait").addClass("hide");
+						$("#dtfimmaiordtini").addClass("hide");
 						$("#form-campanha").css("opacity",1);
-					}, 3500);
-				
+					}, 3000);
 				}
 			}
 		});
@@ -233,12 +265,28 @@
 	
 					var obj = $.parseJSON(response);
 
-					if(obj.status == "!ok" || obj.status == undefined)
-						alert("Não foi possivel cadastrar a campanha");
-					else{
-						alert("Campanha cadastrada com sucesso, caso necessário verifique as informações da campanha");
+					if(obj.status == "!ok" || obj.status == undefined) {
+
+						$("#cadastrofail").removeClass("hide");
+						$("#form-campanha").css("opacity",0.3);
 						
-						window.location.href = "main.html";
+						window.setTimeout(function(){
+							$("#cadastrofail").addClass("hide");
+							$("#form-campanha").css("opacity",1);
+						}, 3000);
+
+					} else {
+						
+						$("#cadastrosucesso").removeClass("hide");
+						$("#form-campanha").css("opacity",0.3);
+						
+						window.setTimeout(function(){
+							$("#cadastrosucesso").addClass("hide");
+							$("#form-campanha").css("opacity",1);
+							window.location.href = "main.html";
+						}, 3000);						
+						
+						
 					}
 				}
 			).fail(function(xhr, textStatus, errorThrown) { 
