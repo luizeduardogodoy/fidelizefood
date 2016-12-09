@@ -103,7 +103,7 @@
 				<ul class="right">
 					<li><a href="#" onclick="editarCampanha()">Alterar Campanha Ativa</a></li>
 					<li class="active"><a href="carimbo.html">Carimbar Refeição</a></li>
-					<li><a href="#" onclick="$('#campanha_ativa').show()">Dados Campanha Ativa</a></li>
+					<li><a href="#" onclick="consultaCampanha()">Dados Campanha Ativa</a></li>
 				</ul>
 			</section>
 		  
@@ -164,7 +164,7 @@
 			var parsedInfoCampanha = JSON.parse(retrieveInfoCampanha);
 			
 			if (retrieveInfoCampanha != null){
-				$('#campanha_ativa').show()
+				consultaCampanha();
 			} 
 				
 			tipoUser = parsedInfo[2];
@@ -277,8 +277,10 @@
 									
 							$("#campanha_ativa").prepend("<div id='campanhamostra' class='small-12 columns' style='padding-bottom:25px'><b>Obs:</b>" + obj.observacao + "</div>");
 							$("#campanha_ativa").prepend("<div class='small-12 columns'><b>Início:</b> " + obj.datainicial + " <b>Término:</b> " + obj.datafinal + " </div>");	
-							$("#campanha_ativa").prepend("<div class='small-12 columns'><b>Qtde Refeição:</b>" + obj.qtde + "</div>");	
+							$("#campanha_ativa").prepend("<div class='small-12 columns'><b>Qtde Refeições:</b>" + obj.qtde + "</div>");	
 							$("#campanha_ativa").prepend("<div class='small-12 columns'><b>Nome:</b>" + obj.nomecampanha + "</div>");
+							$("#campanha_ativa").prepend("<input type='hidden' id='idcampanhahidden' value='" + obj.idcampanha + "' hidden />");
+							$("#campanha_ativa").prepend("<input type='hidden' id='idrestaurantehidden' value='" + obj.idrestaurante + "' hidden />");
 						
 							$('#campanha_ativa').show();
 							
@@ -327,14 +329,40 @@
 							$("#clientes-premiados").html("<thead> <th width='150'>Usuário</th> <th>Utilizado</th> </thead> <tbody>");
 							$("#clientes-premiados").append("<tr><td colspan='2'>" + "Não há usuários que foram premiados para está campanha." + "</td>" + "</tr>");
 						}
+					} else if(obj.status == "!restauranteCampanha"){
+					
+						if ($("#atencao").length == 0) {
+						
+							$("#campanha_ativa").prepend("<div id='atencao' class='small-12 columns'><b align=center>Atenção!!! </br>Não foram encontrados dados de campanha ativa, favor cadastrar uma nova campanha! </br></b></div>");
+							$('#campanha_ativa').show();
+							
+						}
+					
 					}
+
 			});
 		}
 		
 		
 		function editarCampanha(){
 		
-			alert("Alterar Campanha");
+			if ($('#idcampanhahidden').val() != undefined) {			
+				
+				var dadosCampanha = new Array();
+				dadosCampanha = [$('#idcampanhahidden').val(), $('#idrestaurantehidden').val()];
+				window.sessionStorage.setItem("infocampanha", JSON.stringify(dadosCampanha));
+
+				window.location.href = "cadastrocampanha.html";
+				
+			}else{
+				
+				if ($("#atencao").length == 0) {
+
+					$("#campanha_ativa").prepend("<div id='atencao' class='small-12 columns'><b align=center>Atenção!!! </br>Não foram encontrados dados de campanha ativa, favor cadastrar uma nova campanha! </br></b></div>");
+					$('#campanha_ativa').show();
+				
+				}
+			}
 		}
 
 		document.addEventListener('deviceready', init, false);

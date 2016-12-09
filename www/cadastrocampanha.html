@@ -54,39 +54,27 @@
 
 	<form data-abide="ajax" id="frmcadastrocampanha">
 
-	<div class="row" id="menu-user-fornecedor">
-		<nav class="top-bar" data-topbar role="navigation" style="background:#521474">
-			<ul class="title-area">
-				<li class="name">
-					<h1><a href="main.html">FIDELIZEFOOD</a></h1>
-				</li>
-				
-				<!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
-				<li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-		  </ul>
-
-			<section class="top-bar-section" style="background:#521474">
-			 <!-- Right Nav Section -->
-				<ul class="right">
-					<li class="active"><a href="carimbo.html">Carimbar Refeição</a></li>
-					<li class="has-dropdown">
-					<a href="#">Right Button Dropdown</a>
-						<ul class="dropdown">
-							<li><a href="#">First link in dropdown</a></li>
-							<li class="active"><a href="#">Active link in dropdown</a></li>
-						</ul>
+		<div class="row" id="menu-user-fornecedor">
+			<nav class="top-bar" data-topbar role="navigation" style="background:#521474">
+				<ul class="title-area">
+					<li class="name">
+						<h1><a href="main.html">FIDELIZEFOOD</a></h1>
 					</li>
-				</ul>
+					
+					<!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+					<li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+			  </ul>
 
-				<!-- Left Nav Section -->
-				<ul class="left">
-					<!--<li><a href="#" onclick="$('#campanha_ativa').show()">Campanha ativa</a></li>-->
-					<li><a onclick="campanhaativa()">Campanha ativa</a></li>
+				<section class="top-bar-section" style="background:#521474">
+				 <!-- Right Nav Section -->
+					<ul class="right">
+						<li class="active"><a href="carimbo.html">Carimbar Refeição</a></li>
+						<li><a onclick="campanhaativa()">Campanha ativa</a></li>
+					</ul>
 
-				</ul>
-		  </section>
-		</nav>		
-	</div>
+			  </section>
+			</nav>		
+		</div>
 	
 		<div class="row hide" id="dtfimmaiordtini" align="center" style="position:absolute;margin-top:0;z-index:99" >
 			<div class="small-12 columns warning label" style="padding:20px">
@@ -99,7 +87,13 @@
 				<div>"Data Início" não pode ser menor que a data atual</div>
 			</div>
 		</div>
-		
+				
+		<div class="row hide" id="dtfimmenordtatual" align="center" style="position:absolute;margin-top:0;z-index:99" >
+			<div class="small-12 columns warning label" style="padding:20px">
+				<div>"Data Fim" não pode ser menor que a data atual</div>
+			</div>
+		</div>
+				
 		<div class="row hide" id="cadastrofail" align="center" style="position:absolute;margin-top:0;z-index:99" >
 			<div class="small-12 columns warning label" style="padding:20px">
 				<div>Houve falha no cadastro da campanha, contacte o administrador do aplicativo</div>
@@ -114,8 +108,8 @@
 	
 		<div class="row" id="form-campanha">
 
-			<div style="background:white;" class="small-12 columns panel" align="center">
-				<h1 style="color:#521474">Cadastro de campanha</h1>
+			<!-- titulo é adicionado aqui conforme edição ou adição de nova campanha -->
+			<div style="background:white;" class="small-12 columns panel addtitle" align="center">
 			</div>
 			
 			<div class="small-12 large-6 columns">
@@ -177,21 +171,33 @@
 	<script type="text/javascript">
 
 		$(document).foundation();
+		
+		//recupera os dados da campanha
+		var retrieveInfoCampanha = window.sessionStorage.getItem("infocampanha");
+		var parsedInfoCampanha = JSON.parse(retrieveInfoCampanha);
 
 		$('#frmcadastrocampanha').on('valid.fndtn.abide', function(e) {
 		  // Handle the submission of the form
 			if(e.namespace != 'abide.fndtn') {
 				return;
 			}
-		  
-		  enviar();
-		  
+			
+			if (parsedInfoCampanha != null){
+				
+				if (parsedInfoCampanha[0] != "campanha"){
+					atualizar();
+				} else {
+					enviar();
+				}
+			} else {
+				enviar();
+			}
 		});
 		
 		
 		function campanhaativa(){
 			var dadosCampanha = new Array();
-			dadosCampanha = ['1'];
+			dadosCampanha = ['campanha'];
 			window.sessionStorage.setItem("infocampanha", JSON.stringify(dadosCampanha));
 			window.location.href = "main.html"; 
 		}
@@ -224,6 +230,28 @@
 		
 			// depois valido data inicial com data final
 			} 
+			
+			// primeiro valido so data inicial
+			if ($.isNumeric(dtfm)){
+				
+				// recuperando a data atual no mesmo formato das datas
+				dateactual = new Date().toISOString().slice(0,10);
+				dtfimformat = new Date(Date.parse($("#dtFim").val())).toISOString().slice(0,10);
+				
+				if (dtfimformat < dateactual) {
+						
+					$("#dtfimmenordtatual").removeClass("hide");
+					$("#form-campanha").css("opacity",0.3);
+					
+					window.setTimeout(function(){
+						$("#dtFim").val("");
+						$("#dtfimmenordtatual").addClass("hide");
+						$("#form-campanha").css("opacity",1);
+					}, 3000);
+				}
+		
+			// depois valido data inicial com data final
+			}
 
 			if ($.isNumeric(dtini) && $.isNumeric(dtfm)) {
 						
@@ -256,11 +284,10 @@
 			campanha.qtd  = $("#qtd").val();
 			campanha.obs  = $("#obs").val();
 			campanha.idRestaurante = parsedInfo[0];
-			//campanha.campanha  = $("#campanha").val();
 			campanha.req   = "cadastrocampanha";
 			
-			$.post("http://fidelizefood.azurewebsites.net/public_html/index.php", campanha, 
-			//$.post("http://localhost:8080/public_html/index.php",campanha,
+			//$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php", 
+			$.post("http://localhost:8080/public_html/index.php",campanha,
 				function(response){
 	
 					var obj = $.parseJSON(response);
@@ -284,9 +311,53 @@
 							$("#cadastrosucesso").addClass("hide");
 							$("#form-campanha").css("opacity",1);
 							window.location.href = "main.html";
-						}, 3000);						
+						}, 3000);												
+					}
+				}
+			).fail(function(xhr, textStatus, errorThrown) { 
+				alert("Não foi possível se conectar") 
+				/*$("#wait").addClass("hide");
+				$("#form-login").css("opacity",1);*/
+			});
+		}
+		
+		function atualizar(){
+							
+			var campanha = {};
+
+			campanha.nomeCampanha  = $("#nomeCampanha").val();
+			campanha.dtFim  = $("#dtFim").val();
+			campanha.obs  = $("#obs").val();
+			campanha.idcampanha = parsedInfoCampanha[0];
+			campanha.idrestaurante = parsedInfoCampanha[1];
+			campanha.req   = "atualizarcampanha";
+			
+			//$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php", 
+			$.post("http://localhost:8080/public_html/index.php",campanha,
+				function(response){
+	
+					var obj = $.parseJSON(response);
+
+					if(obj.status == "!ok" || obj.status == undefined) {
+
+						$("#cadastrofail").removeClass("hide");
+						$("#form-campanha").css("opacity",0.3);
 						
+						window.setTimeout(function(){
+							$("#cadastrofail").addClass("hide");
+							$("#form-campanha").css("opacity",1);
+						}, 3000);
+
+					} else {
 						
+						$("#cadastrosucesso").removeClass("hide");
+						$("#form-campanha").css("opacity",0.3);
+						
+						window.setTimeout(function(){
+							$("#cadastrosucesso").addClass("hide");
+							$("#form-campanha").css("opacity",1);
+							window.location.href = "main.html";
+						}, 3000);												
 					}
 				}
 			).fail(function(xhr, textStatus, errorThrown) { 
@@ -297,12 +368,53 @@
 		}
 
 		function init(){
-			mudar();
-		}
-	
-		function mudar(){
-			StatusBar.show();
-			StatusBar.backgroundColorByHexString("#521474");
+			
+			if (parsedInfoCampanha != null){
+				
+				if (parsedInfoCampanha[0] != "campanha"){
+				
+					var dados = {};
+					
+					dados.req = "consultacampanhabyid";
+					dados.idcampanha = parsedInfoCampanha[0];
+					
+					$.post("http://localhost:8080/public_html/index.php", dados, 
+						function(response){
+							
+							var obj = $.parseJSON(response);
+							
+							if(obj.status == "ok" ){
+							
+								
+								$( ".addtitle" ).append("<h1 style='color:#521474'>Edição de Campanha</h1>");
+													
+								$("#nomeCampanha").val(obj.nomecampanha);
+															
+								$("#dtInicio").val(obj.datainicial);
+								$("#dtInicio").prop('disabled', true); 
+								
+								$("#dtFim").val(obj.datafinal);
+								
+								$("#qtd").val(obj.qtde);
+								$("#qtd").prop('disabled', true); 
+							
+								$("#obs").val(obj.observacao);
+											
+							}
+						}
+					);
+					
+				} else {
+				
+					$( ".addtitle" ).append("<h1 style='color:#521474'>Cadastro de Campanha</h1>");
+					
+				}
+				
+			} else {
+				
+				$( ".addtitle" ).append("<h1 style='color:#521474'>Cadastro de Campanha</h1>");
+		
+			}
 		}
 
 		document.addEventListener('deviceready', init, false);
