@@ -105,6 +105,12 @@
 				<div>Cadastro de campanha efetuado com sucesso</div>
 			</div>
 		</div>
+		
+		<div class="row hide" id="alteradosucesso" align="center" style="position:absolute;margin-top:0;z-index:99" >
+			<div class="small-12 columns success label" style="padding:20px">
+				<div>Cadastro de campanha alterado com sucesso</div>
+			</div>
+		</div>
 	
 		<div class="row" id="form-campanha">
 
@@ -350,11 +356,11 @@
 
 					} else {
 						
-						$("#cadastrosucesso").removeClass("hide");
+						$("#alteradosucesso").removeClass("hide");
 						$("#form-campanha").css("opacity",0.3);
 						
 						window.setTimeout(function(){
-							$("#cadastrosucesso").addClass("hide");
+							$("#alteradosucesso").addClass("hide");
 							$("#form-campanha").css("opacity",1);
 							window.location.href = "main.html";
 						}, 3000);												
