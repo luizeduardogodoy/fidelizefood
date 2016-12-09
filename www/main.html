@@ -231,8 +231,8 @@
 
 		function listaRestaurantes(user){
 			$("#listaCampanhas").css("opacity",0.2);
-				$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php",
-			//$.post("http://fidelizefood.azurewebsites.net/public_html/index.php",
+			//$.post("http://localhost/fidelizefood-backend/public_html/index.php",
+			$.post("http://fidelizefood.azurewebsites.net/public_html/index.php",
 				{
 					req : "listarcampanhaspart",
 					user_id : user
@@ -251,6 +251,8 @@
 								"<td>" + obj.registros[i].refeicoes + "</td>" +
 								"<td>" + obj.registros[i].qtde + "</td> " +
 								"<td>" + obj.registros[i].ultima  + "</td> " +
+								//João
+								"<td><span onclick='listaCarimbos("+ obj.registros[i].idusuariocampanha +")'>Detalhe</span></tr></td>" + 
 								"</tr>");
 
 						}
@@ -320,6 +322,48 @@
 						$("#clientes-premiados").css("opacity",1);
 					}
 			});
+		}
+		
+		function listaCarimbos(userCampanha){
+			$("#listaCarimbos").css("opacity",0.2);
+			//$.post("http://localhost/fidelizefood-backend/public_html/index.php",
+			$.post("http://fidelizefood.azurewebsites.net/public_html/index.php",
+				{
+					req : "listarCarimbosPart",
+					user_id : userCampanha
+				},
+				function(response){
+
+					var obj = $.parseJSON(response);
+
+					if(obj.status == "ok"){
+
+						$("#listaCarimbos").html("<thead> <th width='150'>Restaurante</th> <th>Prêmio</th> <th>Inicio</th> <th>Fim</th> </thead> <tbody>");
+						//Listar os dados da campanha no cabeçalho						
+						$("#listaCarimbos").append("<tr><td>" + obj.registros[i].nomeRestaurante + "</td>" +
+								"<td>" + obj.registros[i].qtde + "</td> " +
+								"<td>" + obj.registros[i].inicio  + "</td> " +
+								"<td>" + obj.registros[i].fim  + "</td> " +
+								"</tr>");
+								
+						for(var i = 0; i < obj.registros.length; i++){
+
+							$("#listaCarimbos").append("<tr><td>" + obj.registros[i].DataCarimbo + "</td>" 
+								"</tr>");
+
+						}
+
+						$("#listaCarimbos").append("</tbody>");
+						$("#listaCarimbos").append("<tfoot><tr><td><span onclick='listaCarimbos("+ userCampanha +")'>Atualizar</span></tr></td></tfoot>");
+
+						$("#listaCarimbos").css("opacity",1);
+					}
+					else{
+						alert("Ocorreu algum problema!");
+					}
+
+			});
+
 		}
 
 		document.addEventListener('deviceready', init, false);

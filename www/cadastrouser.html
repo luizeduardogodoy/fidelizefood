@@ -67,15 +67,7 @@
 					<input type="text" name="name" id="name" placeholder="Digite seu nome completo..." required pattern="[a-zA-Z]+"/>
 				</label>
 				<small class="error">Nome é requerido.</small>
-			</div>
-			
-			
-			<div class="small-12 large-6 columns">
-				<label for="user"> Email:
-					<input  type="email" name="email" id="email" placeholder="Digite seu e-mail..." required/>
-				</label>
-				<small class="error">Endereço de e-mail é requerido.</small>
-			</div>
+			</div>			
 	
 			<div class="small-12 large-6 columns">
 				<label>Tipo:</label>
@@ -89,10 +81,17 @@
 			</div>
 
 			<div class="small-12 large-6 columns">
-				<label  for="user"> Usuário:
-					<input type="text" name="user" id="user" placeholder="Digite seu usuário..." required pattern="[a-zA-Z]+"/>
+				<label  for="user"> CPF:
+					<input type="text" maxLength="11" name="cpf" id="cpf" placeholder="Digite seu cpf..." required pattern="[0-9]{3,}[0-9]{3,}[0-9]{3,}[0-9]{2,}$" />					
 				</label>
-				<small class="error">Usuário é requerido.</small>
+				<small class="error">CPF é requerido.</small>
+			</div>
+			
+			<div class="small-12 large-6 columns">
+				<label for="user"> Email:
+					<input  type="email" name="email" id="email" placeholder="Digite seu e-mail..." required/>
+				</label>
+				<small class="error">Endereço de e-mail é requerido.</small>
 			</div>
 
 			<div class="small-6 large-6 columns">
@@ -155,10 +154,11 @@
 			user.email = $("#email").val();
 			user.tipo  = tipo;
 			user.pass  = $("#pass").val();
-			user.user  = $("#user").val();
+			//user.user  = $("#user").val();
+			user.cpf = $("#cpf").val();
 			user.req   = "cadastrouser";
 			
-			//$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php", 
+			//$.post("http://localhost/fidelizefood-backend/public_html/index.php", 
 			$.post("http://fidelizefood.azurewebsites.net/public_html/index.php", 
 				user,
 				function(response){
@@ -171,7 +171,9 @@
 						alert("Usuário cadastrado com sucesso, faça o login com os dados informados");
 
 						var details = new Array();
-						details = [$("#user").val(), $("#name").val(),$("#tipo").val()];
+						//João
+						//details = [$("#user").val(), $("#name").val(),$("#tipo").val()];
+						details = [$("#cpf").val(), $("#name").val(),$("#tipo").val()];
 						window.sessionStorage.setItem("info", JSON.stringify(details));
 
 						window.location.href = "index.html";
@@ -192,6 +194,7 @@
 			StatusBar.show();
 			StatusBar.backgroundColorByHexString("#521474");
 		}
+		
 
 		document.addEventListener('deviceready', init, false);
 
