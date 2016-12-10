@@ -75,8 +75,6 @@
 		<div style="background:#521474;margin-bottom:5px" class="small-12 columns panel" align="center">
 			<h1 style="color:white">FIDELIZEFOOD</h1>
 		</div>
-
-	
 		
 		<div style="background:white;" class="small-12 columns panel" align="center">
 			<h1 style="color:#521474">Cadastro de usuário</h1>
@@ -150,22 +148,22 @@
 			if(e.namespace != 'abide.fndtn') {
 				return;
 			}
-		  
+
 		  enviar();
-		  
+
 		});
-		
+
 		function enviar(){
-			
+
 			var tipo = "";
-			
+
 			$('input[type="radio"]').each(function(){
 				if($(this).prop("checked")){
 					tipo = $(this).val();
 				}
-					
+
 			});
-			
+
 			var user = {};
 
 			user.name  = $("#name").val();
@@ -176,12 +174,10 @@
 			user.cpf = $("#cpf").val();
 			user.req   = "cadastrouser";
 			
-			//$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php", 
-			//$.post("http://fidelizefood.azurewebsites.net/public_html/index.php", 
-			$.post("http://localhost:8080/public_html/index.php",
+			$.post(window.sessionStorage.getItem("url"),
 				user,
 				function(response){
-	
+
 					var obj = $.parseJSON(response);
 
 					if(obj.status == "!ok" || obj.status == undefined) {
@@ -207,6 +203,7 @@
 						
 					}
 				}
+
 			).fail(function(xhr, textStatus, errorThrown) { 
 				
 				$("#errorconetion").removeClass("hide");
@@ -228,7 +225,7 @@
 			StatusBar.show();
 			StatusBar.backgroundColorByHexString("#521474");
 		}
-		
+
 
 		document.addEventListener('deviceready', init, false);
 

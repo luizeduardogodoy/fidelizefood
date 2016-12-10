@@ -293,7 +293,7 @@
 			campanha.req   = "cadastrocampanha";
 			
 			//$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php", 
-			$.post("http://localhost:8080/public_html/index.php",campanha,
+			$.post("http://teste/fidelizefood-backend/public_html/index.php",campanha,
 				function(response){
 	
 					var obj = $.parseJSON(response);
@@ -339,7 +339,7 @@
 			campanha.req   = "atualizarcampanha";
 			
 			//$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php", 
-			$.post("http://localhost:8080/public_html/index.php",campanha,
+			$.post("http://teste/fidelizefood-backend/public_html/index.php",campanha,
 				function(response){
 	
 					var obj = $.parseJSON(response);
@@ -384,7 +384,7 @@
 					dados.req = "consultacampanhabyid";
 					dados.idcampanha = parsedInfoCampanha[0];
 					
-					$.post("http://localhost:8080/public_html/index.php", dados, 
+					$.post("http://teste/fidelizefood-backend/public_html/index.php", dados, 
 						function(response){
 							
 							var obj = $.parseJSON(response);
