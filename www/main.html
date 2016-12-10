@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <!--
     Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
-
     Licensed to the Apache Software Foundation (ASF) under one
     or more contributor license agreements.  See the NOTICE file
     distributed with this work for additional information
@@ -9,9 +8,7 @@
     to you under the Apache License, Version 2.0 (the
     "License"); you may not use this file except in compliance
     with the License.  You may obtain a copy of the License at
-
     http://www.apache.org/licenses/LICENSE-2.0
-
     Unless required by applicable law or agreed to in writing,
     software distributed under the License is distributed on an
     "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -145,30 +142,19 @@
 
     <script type="text/javascript">
 		$(document).foundation();
-
 		$(document).ready(function(){
-
 		});
-
 		var tipoUser = null;
-
 		/*Inicializa o main do app e ja consulta se o usuário cadastrou o restaurante*/
-
 		function init(){
 			var retrieveInfo = window.sessionStorage.getItem("info");
-
 			var retrieveInfoCampanha = window.sessionStorage.getItem("infocampanha");
-
 			var parsedInfo = JSON.parse(retrieveInfo);
-
 			var parsedInfoCampanha = JSON.parse(retrieveInfoCampanha);
-
 			if (retrieveInfoCampanha != null){
 				consultaCampanha();
 			}
-
 			tipoUser = parsedInfo[2];
-
 			//abre o menu específico para o tipo de usuario logado
 			if(tipoUser == 2){
 				$("#menu-user-fornecedor").show();
@@ -176,70 +162,46 @@
 			else{
 				$("#menu-user-consumidor").show();
 			}
-
 			$("#name_user").html("Bem vindo: " + parsedInfo[1]);
-
 			if(tipoUser == 2){
-
 				$.post(window.sessionStorage.getItem("url"),
 					{
 						req : "consultarestaurante",
 						user_id : parsedInfo[0]
 					},
 					function(response){
-
 						var obj = $.parseJSON(response);
-
-
 						if (obj.status == "ok"){
-
 							consultaCampanha();
-
 						} else if (obj.status == "!campanha"){
-
 							$("body").append("<br /> " +
 								"<div class='row'><button class='expand' onclick='window.location.href =\"cadastrocampanha.html\"; '>Cadastrar campanha</button></div>");
-
 						} else {
-
 							//alert("Restaurante não informado ainda");
 							window.location.href = "cadastrorestaurante.html";
-
 						}
-
 				});
 			}
-
 			if(tipoUser == 1){
 				listaRestaurantes(parsedInfo[0]);
 			}
-
 		}
-
 		function mudar(){
 			StatusBar.show();
 			StatusBar.backgroundColorByHexString("#ff4500");
 		}
-
 		function listaRestaurantes(user){
 			$("#listaCampanhas").css("opacity",0.2);
-
 			  $.post(window.sessionStorage.getItem("url"),
-
 				{
 					req : "listarcampanhaspart",
 					user_id : user
 				},
 				function(response){
-
 					var obj = $.parseJSON(response);
-
 					if(obj.status == "ok"){
-
 						$("#listaCampanhas").html("<thead> <th width='150'>Restaurante</th> <th>Nº Ref</th> <th>Qtde</th> <th>Última</th> </thead> <tbody>");
-
 						for(var i = 0; i < obj.registros.length; i++){
-
 							$("#listaCampanhas").append("<tr><td>" + obj.registros[i].nomeRestaurante + "</td>" +
 								"<td>" + obj.registros[i].refeicoes + "</td>" +
 								"<td>" + obj.registros[i].qtde + "</td> " +
@@ -247,168 +209,113 @@
 								//João
 								"<td><span onclick='listaCarimbos("+ obj.registros[i].idusuariocampanha +")'>Detalhe</span></tr></td>" +
 								"</tr>");
-
 						}
-
 						$("#listaCampanhas").append("</tbody>");
 						$("#listaCampanhas").append("<tfoot><tr><td><span onclick='listaRestaurantes("+ user +")'>Atualizar</span></tr></td></tfoot>");
-
 						$("#listaCampanhas").css("opacity",1);
 					}
 					else{
 						alert("Ocorreu algum problema!");
 					}
-
 			});
-
 		}
-
 		function consultaCampanha(){
-
-			$.post(window.sessionStorage.getItem("url"), {req : "consultacampanha"},
+		$.post(window.sessionStorage.getItem("url"), {req : "consultacampanha"},
+		
 				function(response){
-
 					var obj = $.parseJSON(response);
-
 					if(obj.status == "ok"){
-
-
 						if ($("#campanhamostra").length == 0) {
-
 							$("#campanha_ativa").prepend("<div id='campanhamostra' class='small-12 columns' style='padding-bottom:25px'><b>Obs:</b>" + obj.observacao + "</div>");
 							$("#campanha_ativa").prepend("<div class='small-12 columns'><b>Início:</b> " + obj.datainicial + " <b>Término:</b> " + obj.datafinal + " </div>");
 							$("#campanha_ativa").prepend("<div class='small-12 columns'><b>Qtde Refeições:</b>" + obj.qtde + "</div>");
 							$("#campanha_ativa").prepend("<div class='small-12 columns'><b>Nome:</b>" + obj.nomecampanha + "</div>");
 							$("#campanha_ativa").prepend("<input type='hidden' id='idcampanhahidden' value='" + obj.idcampanha + "' hidden />");
 							$("#campanha_ativa").prepend("<input type='hidden' id='idrestaurantehidden' value='" + obj.idrestaurante + "' hidden />");
-
 							$('#campanha_ativa').show();
-
 						}
-
 						if (obj.registrosativos != undefined){
 							//fidelizados
 							$("#clientes-ativos").html("<thead> <th width='150'>Usuário</th> <th>Nº Ref</th> <th>Última Ref</th> </thead> <tbody>");
-
-
 							for(var i = 0; i < obj.registrosativos.length; i++){
-
 								$("#clientes-ativos").append("<tr><td>" + obj.registrosativos[i].nome + "</td>" +
 									"<td>" + obj.registrosativos[i].refeicoes + "</td> " +
 									"<td>" + obj.registrosativos[i].ultima  + "</td> " +
 									"</tr>");
-
 							}
-
 							$("#clientes-ativos").append("</tbody>");
 							$("#clientes-ativos").append("<tfoot><tr><td><span onclick='consultaCampanha()'>Atualizar</span></tr></td></tfoot>");
-
 							$("#clientes-ativos").css("opacity",1);
 						} else {
 							$("#clientes-ativos").html("<thead> <th width='150'>Usuário</th> <th>Nº Ref</th> <th>Última Ref</th> </thead> <tbody>");
 							$("#clientes-ativos").append("<tr><td colspan='3'>" + "Não há usuários ativos na campanha." + "</td>" + "</tr>");
 						}
-
 						if (obj.registrospremiados != undefined){
 							// premiados
 							$("#clientes-premiados").html("<thead> <th width='150'>Usuário</th> <th>Utilizado</th> </thead> <tbody>");
-
 							for(var i = 0; i < obj.registrospremiados.length; i++){
-
 								$("#clientes-premiados").append("<tr><td>" + obj.registrospremiados[i].nome + "</td>" +
 									"<td>" + obj.registrospremiados[i].utilizado + "</td> " +
 									"</tr>");
-
 							}
-
 							$("#clientes-premiados").append("</tbody>");
 							$("#clientes-premiados").append("<tfoot><tr><td><span onclick='consultaCampanha()'>Atualizar</span></tr></td></tfoot>");
-
 							$("#clientes-premiados").css("opacity",1);
 						} else {
 							$("#clientes-premiados").html("<thead> <th width='150'>Usuário</th> <th>Utilizado</th> </thead> <tbody>");
 							$("#clientes-premiados").append("<tr><td colspan='2'>" + "Não há usuários que foram premiados para está campanha." + "</td>" + "</tr>");
 						}
 					} else if(obj.status == "!restauranteCampanha"){
-
 						if ($("#atencao").length == 0) {
-
 							$("#campanha_ativa").prepend("<div id='atencao' class='small-12 columns'><b align=center>Atenção!!! </br>Não foram encontrados dados de campanha ativa, favor cadastrar uma nova campanha! </br></b></div>");
 							$('#campanha_ativa').show();
-
 						}
-
 					}
-
 			});
 		}
-
-
 		function listaCarimbos(userCampanha){
 			$("#listaCarimbos").css("opacity",0.2);
-
 			$.post(window.sessionStorage.getItem("url"),
 				{
 					req : "listarCarimbosPart",
 					idUsuarioCampanha : userCampanha
 				},
 				function(response){
-
 					var obj = $.parseJSON(response);
-
 					if(obj.status == "ok"){
-
 						$("#listaCarimbos").html("<thead> <th width='150'>Restaurante</th> <th>Prêmio</th> <th>Inicio</th> <th>Fim</th> </thead> <tbody>");
-						//Listar os dados da campanha no cabeçalho
-						$("#listaCarimbos").append("<tr><td>" + obj.registros[i].nomeRestaurante + "</td>" +
-								"<td>" + obj.registros[i].qtde + "</td> " +
-								"<td>" + obj.registros[i].inicio  + "</td> " +
-								"<td>" + obj.registros[i].fim  + "</td> " +
+						//Listar os dados da campanha no cabeçalho						
+						$("#listaCarimbos").append("<tr><td>" + obj.registros[0].nomeRestaurante + "</td>" +
+								"<td>" + obj.registros[0].qtde + "</td> " +
+								"<td>" + obj.registros[0].inicio  + "</td> " +
+								"<td>" + obj.registros[0].fim  + "</td> " +
 								"</tr>");
-
 						for(var i = 0; i < obj.registros.length; i++){
-
 							$("#listaCarimbos").append("<tr><td>" + obj.registros[i].DataCarimbo + "</td></tr>");
-
 						}
-
 						$("#listaCarimbos").append("</tbody>");
 						$("#listaCarimbos").append("<tfoot><tr><td><span onclick='listaCarimbos("+ userCampanha +")'>Atualizar</span></tr></td></tfoot>");
-
 						$("#listaCarimbos").css("opacity",1);
 					}
 					else{
 						alert("Ocorreu algum problema!");
 					}
-
 			});
-
 		}
-
 		function editarCampanha(){
-
 			if ($('#idcampanhahidden').val() != undefined) {
-
 				var dadosCampanha = new Array();
 				dadosCampanha = [$('#idcampanhahidden').val(), $('#idrestaurantehidden').val()];
 				window.sessionStorage.setItem("infocampanha", JSON.stringify(dadosCampanha));
-
 				window.location.href = "cadastrocampanha.html";
-
 			}else{
-
 				if ($("#atencao").length == 0) {
-
 					$("#campanha_ativa").prepend("<div id='atencao' class='small-12 columns'><b align=center>Atenção!!! </br>Não foram encontrados dados de campanha ativa, favor cadastrar uma nova campanha! </br></b></div>");
 					$('#campanha_ativa').show();
-
 				}
 			}
-
 		}
-
 		document.addEventListener('deviceready', init, false);
-
     </script>
 </body>
 
