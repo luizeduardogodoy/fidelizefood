@@ -71,7 +71,7 @@
 				</label>
 				<small class="error">Endereço de e-mail inválido.</small>
 			</div>
-			
+
 
 			<div class="small-12 large-6 columns">
 				<label for="pass"> Senha:
@@ -105,6 +105,8 @@
 
 		$(document).foundation();
 
+    var urlBackend = "http://teste/fidelizefood-backend/public_html/index.php";
+
 		//window.location.href = 'users.html';
 
 		$('#loginPage').on('valid.fndtn.abide', function(e) {
@@ -122,12 +124,11 @@
 				return;
 			}
 
-			
+
 			$("#wait").removeClass("hide");
 			$("#form-login").css("opacity",0.3);
 
-			$.post("http://fidelizefood.azurewebsites.net/public_html/index.php",
-			//$.post("http://localhost/fidelizefood-backend/public_html/index.php",
+			$.post(urlBackend,
 
 				{
 					req : "login",
@@ -149,6 +150,9 @@
 						var dadosUser = new Array();
 						dadosUser = [obj.id, obj.nome, obj.tipo];
 						window.sessionStorage.setItem("info", JSON.stringify(dadosUser));
+
+            //salva na sessão a url do backend para as outras funções js consultar
+            window.sessionStorage.setItem("url", urlBackend);
 
 						window.location.href = "main.html";
 					}
