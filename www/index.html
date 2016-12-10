@@ -104,8 +104,8 @@
 	<script type="text/javascript">
 
 		$(document).foundation();
-
-    var urlBackend = "http://teste/fidelizefood-backend/public_html/index.php";
+	//localhost/fidelizefood-backend/public_html/index.php";
+    var urlBackend = "http://fidelizefood.azurewebsites.net/public_html/index.php";
 
 		//window.location.href = 'users.html';
 
@@ -118,7 +118,7 @@
 		});
 
 		function login(){
-
+$.post(urlBackend, {},function(){alert(urlBackend+'test')});
 			if($("#user").val() == "" || $("#pass").val() == ""){
 				alert("Por favor, informar usuário e senha");
 				return;
