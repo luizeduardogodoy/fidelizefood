@@ -9,4 +9,12 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
+	<allow-navigation href="*" />
+	<allow-intent href="http://*/*" />
+	<allow-intent href="https://*/*" />
+	<access origin="http://fidelizefood.azurewebsites.net" />
+	<access origin="http://azurewebsites.net" />
+	<access origin="https://fidelizefood.azurewebsites.net" />
+	<access origin="https://azurewebsites.net" />
+	
 </widget>
