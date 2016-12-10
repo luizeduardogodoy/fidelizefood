@@ -106,7 +106,7 @@
 					<li><a href="#" onclick="consultaCampanha()">Dados Campanha Ativa</a></li>
 				</ul>
 			</section>
-		  
+
 		</nav>
 	</div>
 
@@ -117,21 +117,21 @@
 	<!--  PROTOTIPO CAMPANHA ATIVA BEGIN-->
 	<div class="row" id="campanha_ativa" style="display:none;background:#ddd;padding:10px">
 
-		
+
 		<div class="small-6 columns"><button class="small expand" onclick="$('#clientes-ativos').show();$('#clientes-premiados').hide()">Clientes ativos</button></div>
-		<div class="small-6 columns"><button class="small success expand" onclick="$('#clientes-premiados').show();$('#clientes-ativos').hide()">Clientes premiados</button></div>		
-		
-		
+		<div class="small-6 columns"><button class="small success expand" onclick="$('#clientes-premiados').show();$('#clientes-ativos').hide()">Clientes premiados</button></div>
+
+
 	</div>
-	
+
 	<table width="100%" id="clientes-ativos" style="display:none">
-		
+
 	</table>
 
 	<table width="100%" id="clientes-premiados" style="display:none">
-		
+
 	</table>
-	
+
 	<div class="row">
 		<table id="listaCampanhas">
 		</table>
@@ -156,17 +156,17 @@
 
 		function init(){
 			var retrieveInfo = window.sessionStorage.getItem("info");
-			
+
 			var retrieveInfoCampanha = window.sessionStorage.getItem("infocampanha");
-			
+
 			var parsedInfo = JSON.parse(retrieveInfo);
-		
+
 			var parsedInfoCampanha = JSON.parse(retrieveInfoCampanha);
-			
+
 			if (retrieveInfoCampanha != null){
 				consultaCampanha();
-			} 
-				
+			}
+
 			tipoUser = parsedInfo[2];
 
 			//abre o menu específico para o tipo de usuario logado
@@ -181,8 +181,7 @@
 
 			if(tipoUser == 2){
 
-				//$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php",
-				$.post("http://fidelizefood.azurewebsites.net/public_html/index.php",
+				$.post(window.sessionStorage.getItem("url"),
 					{
 						req : "consultarestaurante",
 						user_id : parsedInfo[0]
@@ -191,21 +190,21 @@
 
 						var obj = $.parseJSON(response);
 
-						
+
 						if (obj.status == "ok"){
-							
+
 							consultaCampanha();
-							
+
 						} else if (obj.status == "!campanha"){
 
 							$("body").append("<br /> " +
 								"<div class='row'><button class='expand' onclick='window.location.href =\"cadastrocampanha.html\"; '>Cadastrar campanha</button></div>");
-						
+
 						} else {
-							
+
 							//alert("Restaurante não informado ainda");
 							window.location.href = "cadastrorestaurante.html";
-							
+
 						}
 
 				});
@@ -224,8 +223,8 @@
 
 		function listaRestaurantes(user){
 			$("#listaCampanhas").css("opacity",0.2);
-				//$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php",
-			   $.post("http://fidelizefood.azurewebsites.net/public_html/index.php",
+
+			  $.post(window.sessionStorage.getItem("url"),
 
 				{
 					req : "listarcampanhaspart",
@@ -246,7 +245,7 @@
 								"<td>" + obj.registros[i].qtde + "</td> " +
 								"<td>" + obj.registros[i].ultima  + "</td> " +
 								//João
-								"<td><span onclick='listaCarimbos("+ obj.registros[i].idusuariocampanha +")'>Detalhe</span></tr></td>" + 
+								"<td><span onclick='listaCarimbos("+ obj.registros[i].idusuariocampanha +")'>Detalhe</span></tr></td>" +
 								"</tr>");
 
 						}
@@ -263,37 +262,35 @@
 			});
 
 		}
-		
+
 		function consultaCampanha(){
-			
-			//$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php",
-			//$.post("http://fidelizefood.azurewebsites.net/public_html/index.php",
-			$.post("http://fidelizefood.azurewebsites.net/public_html/index.php", {req : "consultacampanha"},
+
+			$.post(window.sessionStorage.getItem("url"), {req : "consultacampanha"},
 				function(response){
-					
+
 					var obj = $.parseJSON(response);
-						
+
 					if(obj.status == "ok"){
-									
-						
+
+
 						if ($("#campanhamostra").length == 0) {
-									
+
 							$("#campanha_ativa").prepend("<div id='campanhamostra' class='small-12 columns' style='padding-bottom:25px'><b>Obs:</b>" + obj.observacao + "</div>");
-							$("#campanha_ativa").prepend("<div class='small-12 columns'><b>Início:</b> " + obj.datainicial + " <b>Término:</b> " + obj.datafinal + " </div>");	
-							$("#campanha_ativa").prepend("<div class='small-12 columns'><b>Qtde Refeições:</b>" + obj.qtde + "</div>");	
+							$("#campanha_ativa").prepend("<div class='small-12 columns'><b>Início:</b> " + obj.datainicial + " <b>Término:</b> " + obj.datafinal + " </div>");
+							$("#campanha_ativa").prepend("<div class='small-12 columns'><b>Qtde Refeições:</b>" + obj.qtde + "</div>");
 							$("#campanha_ativa").prepend("<div class='small-12 columns'><b>Nome:</b>" + obj.nomecampanha + "</div>");
 							$("#campanha_ativa").prepend("<input type='hidden' id='idcampanhahidden' value='" + obj.idcampanha + "' hidden />");
 							$("#campanha_ativa").prepend("<input type='hidden' id='idrestaurantehidden' value='" + obj.idrestaurante + "' hidden />");
-						
+
 							$('#campanha_ativa').show();
-							
+
 						}
-						
+
 						if (obj.registrosativos != undefined){
 							//fidelizados
 							$("#clientes-ativos").html("<thead> <th width='150'>Usuário</th> <th>Nº Ref</th> <th>Última Ref</th> </thead> <tbody>");
 
-						
+
 							for(var i = 0; i < obj.registrosativos.length; i++){
 
 								$("#clientes-ativos").append("<tr><td>" + obj.registrosativos[i].nome + "</td>" +
@@ -311,7 +308,7 @@
 							$("#clientes-ativos").html("<thead> <th width='150'>Usuário</th> <th>Nº Ref</th> <th>Última Ref</th> </thead> <tbody>");
 							$("#clientes-ativos").append("<tr><td colspan='3'>" + "Não há usuários ativos na campanha." + "</td>" + "</tr>");
 						}
-							
+
 						if (obj.registrospremiados != undefined){
 							// premiados
 							$("#clientes-premiados").html("<thead> <th width='150'>Usuário</th> <th>Utilizado</th> </thead> <tbody>");
@@ -333,24 +330,24 @@
 							$("#clientes-premiados").append("<tr><td colspan='2'>" + "Não há usuários que foram premiados para está campanha." + "</td>" + "</tr>");
 						}
 					} else if(obj.status == "!restauranteCampanha"){
-					
+
 						if ($("#atencao").length == 0) {
-						
+
 							$("#campanha_ativa").prepend("<div id='atencao' class='small-12 columns'><b align=center>Atenção!!! </br>Não foram encontrados dados de campanha ativa, favor cadastrar uma nova campanha! </br></b></div>");
 							$('#campanha_ativa').show();
-							
+
 						}
-					
+
 					}
 
 			});
 		}
-		
+
 
 		function listaCarimbos(userCampanha){
 			$("#listaCarimbos").css("opacity",0.2);
-			//$.post("http://localhost/fidelizefood-backend/public_html/index.php",
-			$.post("http://fidelizefood.azurewebsites.net/public_html/index.php",
+
+			$.post(window.sessionStorage.getItem("url"),
 				{
 					req : "listarCarimbosPart",
 					idUsuarioCampanha : userCampanha
@@ -362,13 +359,13 @@
 					if(obj.status == "ok"){
 
 						$("#listaCarimbos").html("<thead> <th width='150'>Restaurante</th> <th>Prêmio</th> <th>Inicio</th> <th>Fim</th> </thead> <tbody>");
-						//Listar os dados da campanha no cabeçalho						
+						//Listar os dados da campanha no cabeçalho
 						$("#listaCarimbos").append("<tr><td>" + obj.registros[i].nomeRestaurante + "</td>" +
 								"<td>" + obj.registros[i].qtde + "</td> " +
 								"<td>" + obj.registros[i].inicio  + "</td> " +
 								"<td>" + obj.registros[i].fim  + "</td> " +
 								"</tr>");
-								
+
 						for(var i = 0; i < obj.registros.length; i++){
 
 							$("#listaCarimbos").append("<tr><td>" + obj.registros[i].DataCarimbo + "</td></tr>");
@@ -387,24 +384,24 @@
 			});
 
 		}
-		
+
 		function editarCampanha(){
-		
-			if ($('#idcampanhahidden').val() != undefined) {			
-				
+
+			if ($('#idcampanhahidden').val() != undefined) {
+
 				var dadosCampanha = new Array();
 				dadosCampanha = [$('#idcampanhahidden').val(), $('#idrestaurantehidden').val()];
 				window.sessionStorage.setItem("infocampanha", JSON.stringify(dadosCampanha));
 
 				window.location.href = "cadastrocampanha.html";
-				
+
 			}else{
-				
+
 				if ($("#atencao").length == 0) {
 
 					$("#campanha_ativa").prepend("<div id='atencao' class='small-12 columns'><b align=center>Atenção!!! </br>Não foram encontrados dados de campanha ativa, favor cadastrar uma nova campanha! </br></b></div>");
 					$('#campanha_ativa').show();
-				
+
 				}
 			}
 
