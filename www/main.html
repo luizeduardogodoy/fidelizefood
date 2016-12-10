@@ -99,7 +99,8 @@
 			 <!-- Right Nav Section -->
 				<ul class="right">
 					<li><a href="#" onclick="editarCampanha()">Alterar Campanha Ativa</a></li>
-					<li class="active"><a href="carimbo.html">Carimbar Refeição</a></li>
+					<li><a href="carimbo.html">Carimbar Refeição</a></li>
+          <li><a href="premio.html">Registrar Prêmio</a></li>
 					<li><a href="#" onclick="consultaCampanha()">Dados Campanha Ativa</a></li>
 				</ul>
 			</section>
@@ -222,7 +223,7 @@
 		function consultaCampanha(){
 
 		$.post(window.sessionStorage.getItem("url"), {req : "consultacampanha"},
-		
+
 				function(response){
 					var obj = $.parseJSON(response);
 					if(obj.status == "ok"){
@@ -285,7 +286,7 @@
 					var obj = $.parseJSON(response);
 					if(obj.status == "ok"){
 						$("#listaCarimbos").html("<thead> <th width='150'>Restaurante</th> <th>Prêmio</th> <th>Inicio</th> <th>Fim</th> </thead> <tbody>");
-						//Listar os dados da campanha no cabeçalho						
+						//Listar os dados da campanha no cabeçalho
 						$("#listaCarimbos").append("<tr><td>" + obj.registros[0].nomeRestaurante + "</td>" +
 								"<td>" + obj.registros[0].qtde + "</td> " +
 								"<td>" + obj.registros[0].inicio  + "</td> " +
