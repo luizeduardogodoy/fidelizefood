@@ -53,12 +53,28 @@
 </head>
 
 <body>
-		<div class="row hide" id="wait" align="center" style="position:absolute;margin-top:0;z-index:99" >
-			<div class="small-12 columns success label" style="padding:20px">
-				<div>Aguarde, conectando...</div>
-			</div>
+
+	<div class="row hide" id="wait" align="center" style="position:absolute;margin-top:0;z-index:99" >
+		<div class="small-12 columns success label" style="padding:20px;font-size:20px">
+			<div>Aguarde, conectando...</div>
 		</div>
-		<div class="row" id="form-login">
+	</div>
+	
+	<div class="row hide" id="errordataentered" align="center" style="position:absolute;margin-top:0;z-index:99" >
+		<div class="small-12 columns warning label" style="padding:20px;font-size:20px">
+			<div>Não foi possivel se conectar!</br>E-mail ou senha inválidos...</div>
+		</div>
+	</div>
+	
+	<div class="row hide" id="errorconetion" align="center" style="position:absolute;margin-top:0;z-index:99" >
+		<div class="small-12 columns warning label" style="padding:20px;font-size:20px">
+			<div>Falha de conexão!</br>Entre em contato com o</br>administrador do aplicativo...</div>
+		</div>
+	</div>
+	
+		
+	<div class="row" id="form-login">
+		
 		<form data-abide="ajax" id="loginPage">
 
 			<div style="background:white;margin-bottom:60px" class="small-12 columns panel" align="center">
@@ -87,15 +103,14 @@
 			</div>
 
 		</form>
-		</div>
-		<!--position:absolute;background:#545487;bottom:0px-->
-		<div class="row">
+		
+			<!--position:absolute;background:#545487;bottom:0px-->
 			<div class="small-12 columns" align="center" style="margin-top:-18px">
 				<button style="background-color:#545487;color:white" class="small button expand" onclick="cadastrarUser()">CADASTRAR</button>
 			</div>
-		</div>
-
+		
 	</div>
+
 	<script type="text/javascript" src="cordova.js"></script>
 	<script src="js/vendor/jquery.js"></script>
 	<script src="js/foundation.min.js"></script>
@@ -104,9 +119,7 @@
 	<script type="text/javascript">
 
 		$(document).foundation();
-
-		//window.location.href = 'users.html';
-
+		
 		$('#loginPage').on('valid.fndtn.abide', function(e) {
 		  // Handle the submission of the form
 			 if(e.namespace != 'abide.fndtn') {
@@ -116,19 +129,10 @@
 		});
 
 		function login(){
-
-			if($("#user").val() == "" || $("#pass").val() == ""){
-				alert("Por favor, informar usuário e senha");
-				return;
-			}
-
 			
-			$("#wait").removeClass("hide");
-			$("#form-login").css("opacity",0.3);
-
-			$.post("http://fidelizefood.azurewebsites.net/public_html/index.php",
+			//$.post("http://fidelizefood.azurewebsites.net/public_html/index.php",
 			//$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php",
-
+			$.post("http://localhost:8080/public_html/index.php",
 				{
 					req : "login",
 					user : $("#user").val(),
@@ -139,24 +143,46 @@
 					var obj = $.parseJSON(response);
 
 					if(obj.status == "!ok"){
-						alert("Não foi possivel acessar, usuário ou senha inválidos");
-						$("#wait").addClass("hide");
-						$("#form-login").css("opacity",1);
-
-					}
-					else{
+					
+						$("#errordataentered").removeClass("hide");
+						$("#form-login").css("opacity",0.3);
+					
+						window.setTimeout(function(){
+							$("#user").val("");
+							$("#pass").val("");
+							$("#errordataentered").addClass("hide");
+							$("#form-login").css("opacity",1);
+						}, 3000);
+						
+					} else {
 
 						var dadosUser = new Array();
 						dadosUser = [obj.id, obj.nome, obj.tipo];
 						window.sessionStorage.setItem("info", JSON.stringify(dadosUser));
 
-						window.location.href = "main.html";
+						$("#wait").removeClass("hide");
+						$("#form-login").css("opacity",0.3);
+					
+						window.setTimeout(function(){
+							$("#user").val("");
+							$("#pass").val("");
+							$("#wait").addClass("hide");
+							$("#form-login").css("opacity",1);
+							window.location.href = "main.html";
+						}, 3000);
+						
 					}
 				}
 			).fail(function(xhr, textStatus, errorThrown) {
-				alert("Não foi possível se conectar")
-				$("#wait").addClass("hide");
-				$("#form-login").css("opacity",1);
+			
+				$("#errorconetion").removeClass("hide");
+				$("#form-login").css("opacity",0.3);
+			
+				window.setTimeout(function(){
+					$("#errorconetion").addClass("hide");
+					$("#form-login").css("opacity",1);
+				}, 3000);
+				
 			});
 		}
 
@@ -165,7 +191,6 @@
 		}
 
 		function cadastrarUser(){
-
 			window.location.href = "cadastrouser.html";
 		}
 

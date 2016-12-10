@@ -52,72 +52,89 @@
 
 <body>
 
-		<div class="row">
-  
-			<div style="background:#521474;margin-bottom:5px" class="small-12 columns panel" align="center">
-				<h1 style="color:white">FIDELIZEFOOD</h1>
-			</div>
-
-			<form data-abide="ajax" id="frmCadastroUser">
-			
-			<div style="background:white;" class="small-12 columns panel" align="center">
-				<h1 style="color:#521474">Cadastro de usuário</h1>
-			</div>
-			
-			<div class="small-12 large-6 columns name-field">
-				<label for="user"> Nome:
-					<input type="text" name="name" id="name" placeholder="Digite seu nome completo..." required pattern="[a-zA-Z]+"/>
-				</label>
-				<small class="error">Nome é requerido.</small>
-			</div>			
-	
-			<div class="small-12 large-6 columns">
-				<label>Tipo:</label>
-			</div>
-			
-			<div class="small-6 large-6 columns">
-				<label><input type="radio" name="tipo" id="tipo1" value="1" checked/> Consumidor</label>
-			</div>
-			<div class="small-6 large-6 columns">
-				<label><input type="radio" name="tipo" id="tipo2"  value="2" /> Fornecedor</label>
-			</div>
-
-			<div class="small-12 large-6 columns">
-				<label  for="user"> CPF:
-					<input type="text" maxLength="11" name="cpf" id="cpf" placeholder="Digite seu cpf..." required pattern="[0-9]{3,}[0-9]{3,}[0-9]{3,}[0-9]{2,}$" />					
-				</label>
-				<small class="error">CPF é requerido.</small>
-			</div>
-			
-			<div class="small-12 large-6 columns">
-				<label for="user"> Email:
-					<input  type="email" name="email" id="email" placeholder="Digite seu e-mail..." required/>
-				</label>
-				<small class="error">Endereço de e-mail é requerido.</small>
-			</div>
-
-			<div class="small-6 large-6 columns">
-				<label for="pass"> Senha:
-					<input type="password" name="pass" id="pass" required placeholder="Digite sua senha..." pattern="[a-zA-Z]+"/>
-				</label>
-				<small class="error">Senha digitada é inválida</small>
-			</div>
-			
-			<div class="small-6 large-6 columns">
-				<label for="pass"> Confirmar senha:
-					<input type="password" placeholder="Confirme sua senha..." required pattern="[a-zA-Z]+" data-equalto="pass" />
-				</label>
-				<small class="error">A confirmação de senha é inválida</small>
-			</div>
-
-			<div class="small-12 large-6 columns">
-				<!--<input type="submit" onclick="enviar()" class="button radius expand"/>-->
-				<button type="submit" class="expand small">Enviar</button>
-				
-			</div>
-			</form>
-
+	<div class="row hide" id="cadastrofail" align="center" style="position:absolute;margin-top:0;z-index:99" >
+		<div class="small-12 columns warning label" style="padding:20px;font-size:20px">
+			<div>Falha no Cadastro de Usuário!</br>Contacte o administrador do aplicativo...</div>
 		</div>
+	</div>
+
+	<div class="row hide" id="cadastrosucesso" align="center" style="position:absolute;margin-top:0;z-index:99" >
+		<div class="small-12 columns success label" style="padding:20px;font-size:20px">
+			<div>Usuário cadastrado com sucesso...</br>Faça login com o seu</br>e-mail e senha informados...</div>
+		</div>
+	</div>
+
+	<div class="row hide" id="errorconetion" align="center" style="position:absolute;margin-top:0;z-index:99" >
+		<div class="small-12 columns warning label" style="padding:20px;font-size:20px">
+			<div>Falha de conexão!</br>Entre em contato com o</br>administrador do aplicativo...</div>
+		</div>
+	</div>
+	
+	<form data-abide="ajax" id="frmCadastroUser">
+	 
+		<div style="background:#521474;margin-bottom:5px" class="small-12 columns panel" align="center">
+			<h1 style="color:white">FIDELIZEFOOD</h1>
+		</div>
+
+	
+		
+		<div style="background:white;" class="small-12 columns panel" align="center">
+			<h1 style="color:#521474">Cadastro de usuário</h1>
+		</div>
+		
+		<div class="small-12 large-6 columns name-field">
+			<label for="user"> Nome:
+				<input type="text" name="name" id="name" placeholder="Digite seu nome completo..." required pattern="[a-zA-Z]+"/>
+			</label>
+			<small class="error">Nome é requerido.</small>
+		</div>			
+
+		<div class="small-12 large-6 columns">
+			<label>Tipo:</label>
+		</div>
+		
+		<div class="small-6 large-6 columns">
+			<label><input type="radio" name="tipo" id="tipo1" value="1" checked/> Consumidor</label>
+		</div>
+		<div class="small-6 large-6 columns">
+			<label><input type="radio" name="tipo" id="tipo2"  value="2" /> Fornecedor</label>
+		</div>
+
+		<div class="small-12 large-6 columns">
+			<label  for="user"> CPF:
+				<input type="text" maxLength="11" name="cpf" id="cpf" placeholder="Digite seu cpf..." required pattern="[0-9]{3,}[0-9]{3,}[0-9]{3,}[0-9]{2,}$" />					
+			</label>
+			<small class="error">CPF é requerido.</small>
+		</div>
+		
+		<div class="small-12 large-6 columns">
+			<label for="user"> Email:
+				<input  type="email" name="email" id="email" placeholder="Digite seu e-mail..." required/>
+			</label>
+			<small class="error">Endereço de e-mail é requerido.</small>
+		</div>
+
+		<div class="small-6 large-6 columns">
+			<label for="pass"> Senha:
+				<input type="password" name="pass" id="pass" required placeholder="Digite sua senha..." pattern="[a-zA-Z]+"/>
+			</label>
+			<small class="error">Senha digitada é inválida</small>
+		</div>
+		
+		<div class="small-6 large-6 columns">
+			<label for="pass"> Confirmar senha:
+				<input type="password" placeholder="Confirme sua senha..." required pattern="[a-zA-Z]+" data-equalto="pass" />
+			</label>
+			<small class="error">A confirmação de senha é inválida</small>
+		</div>
+
+		<div class="small-12 large-6 columns">
+			<!--<input type="submit" onclick="enviar()" class="button radius expand"/>-->
+			<button type="submit" class="expand small">Enviar</button>
+			
+		</div>
+		
+	</form>
 
 	<script type="text/javascript" src="cordova.js"></script>
 	<script src="js/vendor/jquery.js"></script>
@@ -136,7 +153,6 @@
 		  
 		  enviar();
 		  
-		  //alert(123);
 		});
 		
 		function enviar(){
@@ -160,31 +176,47 @@
 			user.cpf = $("#cpf").val();
 			user.req   = "cadastrouser";
 			
-			//$.post("http://localhost/fidelizefood-backend/public_html/index.php", 
-			$.post("http://fidelizefood.azurewebsites.net/public_html/index.php", 
+			//$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php", 
+			//$.post("http://fidelizefood.azurewebsites.net/public_html/index.php", 
+			$.post("http://localhost:8080/public_html/index.php",
 				user,
 				function(response){
 	
 					var obj = $.parseJSON(response);
 
-					if(obj.status == "!ok" || obj.status == undefined)
-						alert("Não foi possivel cadastrar o usuário");
-					else{
-						alert("Usuário cadastrado com sucesso, faça o login com os dados informados");
-
-						var details = new Array();
-						//João
-						//details = [$("#user").val(), $("#name").val(),$("#tipo").val()];
-						details = [$("#cpf").val(), $("#name").val(),$("#tipo").val()];
-						window.sessionStorage.setItem("info", JSON.stringify(details));
-
-						window.location.href = "index.html";
+					if(obj.status == "!ok" || obj.status == undefined) {
+					
+						$("#cadastrofail").removeClass("hide");
+						$("#frmCadastroUser").css("opacity",0.3);
+						
+						window.setTimeout(function(){
+							$("#cadastrofail").addClass("hide");
+							$("#frmCadastroUser").css("opacity",1);
+						}, 3000);
+					
+					} else{
+						
+						$("#cadastrosucesso").removeClass("hide");
+						$("#frmCadastroUser").css("opacity",0.3);
+						
+						window.setTimeout(function(){
+							$("#cadastrosucesso").addClass("hide");
+							$("#frmCadastroUser").css("opacity",1);
+							window.location.href = "index.html";
+						}, 3000);
+						
 					}
 				}
 			).fail(function(xhr, textStatus, errorThrown) { 
-				alert("Não foi possível se conectar") 
-				/*$("#wait").addClass("hide");
-				$("#form-login").css("opacity",1);*/
+				
+				$("#errorconetion").removeClass("hide");
+				$("#frmCadastroUser").css("opacity",0.3);
+			
+				window.setTimeout(function(){
+					$("#errorconetion").addClass("hide");
+					$("#frmCadastroUser").css("opacity",1);
+				}, 3000);
+				
 			});
 		}
 
