@@ -105,7 +105,7 @@
 		</nav>
 	</div>
 
-	<form data-abide="ajax" id="carimboForm">
+	<form data-abide="ajax" id="premioForm">
 		<div class="row">
 
 			<div class="small-12 large-6 columns">
@@ -133,7 +133,7 @@
 
 		var  tipoUser = null;
 
-		$('#carimboForm').on('valid.fndtn.abide', function(e) {
+		$('#premioForm').on('valid.fndtn.abide', function(e) {
 		  // Handle the submission of the form
 			if(e.namespace != 'abide.fndtn') {
 
@@ -167,7 +167,9 @@
 							alert("Não foi possível registrar");
 					}
 					else{
-						alert(obj.mensagem);
+            if(obj.msg != undefined){
+              alert(obj.msg)
+            }
 					}
 				}
 			);
