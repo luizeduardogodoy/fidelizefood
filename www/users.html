@@ -84,8 +84,8 @@
 		function carregar(){
 		
 			//$.post("http://teste/fidelizefood-backend/public_html/index.php",{req : "listausers"},
-
-			$.post("http://fidelizefood.azurewebsites.net/public_html/index.php",{req : "listausers"},
+			//$.post("http://fidelizefood.azurewebsites.net/public_html/index.php"
+			$.post("http://localhost:8080/public_html/index.php",{req : "listausers"},
 				function(response){
 	
 					var obj = $.parseJSON(response);

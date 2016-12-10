@@ -52,14 +52,14 @@
 <body>
 
 	<div class="row hide" id="cadastrofail" align="center" style="position:absolute;margin-top:0;z-index:99" >
-		<div class="small-12 columns warning label" style="padding:20px">
-			<div>Houve falha no cadastro do restaurante, contacte o administrador do aplicativo</div>
+		<div class="small-12 columns warning label" style="padding:20px;font-size:20px">
+			<div>Falha no cadastro do restaurante!</br>Contacte o administrador do aplicativo...</div>
 		</div>
 	</div>
 
 	<div class="row hide" id="cadastrosucesso" align="center" style="position:absolute;margin-top:0;z-index:99" >
-		<div class="small-12 columns success label" style="padding:20px">
-			<div>Cadastro de restaurante efetuado com sucesso</div>
+		<div class="small-12 columns success label" style="padding:20px;font-size:20px">
+			<div>Restaurante cadatrado com sucesso...</div>
 		</div>
 	</div>
 
@@ -164,8 +164,6 @@
 			rest.phone  = $("#telefone").val();
 			rest.idusuario = parsedInfo[0];
 			rest.req   = "cadastrorestaurant";
-
-			//$.post("http://teste/fidelizefood-backend/public_html/index.php", rest,
 
 			$.post(window.sessionStorage.getItem("url"), rest, 
 				function(response){

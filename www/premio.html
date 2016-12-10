@@ -28,7 +28,7 @@
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
 
     <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
-
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
     <!-- Good default declaration:
     * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
     * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
@@ -46,7 +46,7 @@
 	<link rel="stylesheet" href="css/app.css">
 	<script src="js/vendor/modernizr.js"></script>
 
-    <title>FIDELIZEFOOD - CARIMBO</title>
+    <title>FIDELIZEFOOD - PRÊMIO</title>
 
 </head>
 
@@ -97,20 +97,22 @@
 
 			<section class="top-bar-section" style="background:#521474">
 			 <!-- Right Nav Section -->
-				<ul class="right">
-					<li class="active"><a href="carimbo.html">Carimbar Refeição</a></li>
-					<li><a href="main.html">Campanha ativa</a></li>
-				</ul>
+       <ul class="right">
+         <li><a href="#" onclick="editarCampanha()">Alterar Campanha Ativa</a></li>
+         <li><a href="carimbo.html">Carimbar Refeição</a></li>
+         <li><a href="premio.html">Registrar Prêmio</a></li>
+         <li><a href="#" onclick="consultaCampanha()">Dados Campanha Ativa</a></li>
+       </ul>
 		  </section>
 		</nav>
 	</div>
 
-	<form data-abide="ajax" id="carimboForm">
+	<form data-abide="ajax" id="premioForm">
 		<div class="row">
 
 			<div class="small-12 large-6 columns">
-				<label for="cpf">Registre o carimbo:
-					<input type="text" name="cpf" id="cpf" placeholder="Digite o cpf do cliente para registrar carimbo..." required/>
+				<label for="cpf">Registre o prêmio:
+					<input type="text" name="cpf" id="cpf" placeholder="Digite o cpf do cliente para registrar prêmio..." required/>
 				</label>
 				<small class="error">CPF válido requerido para registro.</small>
 			</div>
@@ -133,7 +135,7 @@
 
 		var  tipoUser = null;
 
-		$('#carimboForm').on('valid.fndtn.abide', function(e) {
+		$('#premioForm').on('valid.fndtn.abide', function(e) {
 		  // Handle the submission of the form
 			if(e.namespace != 'abide.fndtn') {
 
@@ -167,7 +169,9 @@
 							alert("Não foi possível registrar");
 					}
 					else{
-						alert(obj.mensagem);
+            if(obj.msg != undefined){
+              alert(obj.msg)
+            }
 					}
 				}
 			);

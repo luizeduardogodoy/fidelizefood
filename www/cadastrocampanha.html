@@ -77,38 +77,38 @@
 		</div>
 	
 		<div class="row hide" id="dtfimmaiordtini" align="center" style="position:absolute;margin-top:0;z-index:99" >
-			<div class="small-12 columns warning label" style="padding:20px">
-				<div>"Data Fim" não pode ser menor que "Data Início"</div>
+			<div class="small-12 columns warning label" style="padding:20px;font-size:20px">
+				<div>"Data Fim" não pode ser</br>menor que "Data Início"...</div>
 			</div>
 		</div>
 		
 		<div class="row hide" id="dtinimenorhoje" align="center" style="position:absolute;margin-top:0;z-index:99" >
-			<div class="small-12 columns warning label" style="padding:20px">
-				<div>"Data Início" não pode ser menor que a data atual</div>
+			<div class="small-12 columns warning label" style="padding:20px;font-size:20px">
+				<div>"Data Início" não pode ser</br>menor que a data atual...</div>
 			</div>
 		</div>
 				
 		<div class="row hide" id="dtfimmenordtatual" align="center" style="position:absolute;margin-top:0;z-index:99" >
-			<div class="small-12 columns warning label" style="padding:20px">
-				<div>"Data Fim" não pode ser menor que a data atual</div>
+			<div class="small-12 columns warning label" style="padding:20px;font-size:20px">
+				<div>"Data Fim" não pode ser</br>menor que a data atual...</div>
 			</div>
 		</div>
 				
 		<div class="row hide" id="cadastrofail" align="center" style="position:absolute;margin-top:0;z-index:99" >
-			<div class="small-12 columns warning label" style="padding:20px">
-				<div>Houve falha no cadastro da campanha, contacte o administrador do aplicativo</div>
+			<div class="small-12 columns warning label" style="padding:20px;font-size:20px">
+				<div>Falha no cadastro da campanha</br>Contacte o administrador do aplicativo...</div>
 			</div>
 		</div>
 		
 		<div class="row hide" id="cadastrosucesso" align="center" style="position:absolute;margin-top:0;z-index:99" >
-			<div class="small-12 columns success label" style="padding:20px">
-				<div>Cadastro de campanha efetuado com sucesso</div>
+			<div class="small-12 columns success label" style="padding:20px;font-size:20px">
+				<div>Cadastro de campanha </br> efetuado com sucesso...</div>
 			</div>
 		</div>
 		
 		<div class="row hide" id="alteradosucesso" align="center" style="position:absolute;margin-top:0;z-index:99" >
-			<div class="small-12 columns success label" style="padding:20px">
-				<div>Cadastro de campanha alterado com sucesso</div>
+			<div class="small-12 columns success label" style="padding:20px;font-size:20px">
+				<div>Campanha alterada com sucesso...</div>
 			</div>
 		</div>
 	
@@ -182,6 +182,8 @@
 		var retrieveInfoCampanha = window.sessionStorage.getItem("infocampanha");
 		var parsedInfoCampanha = JSON.parse(retrieveInfoCampanha);
 
+		var url = window.sessionStorage.getItem("url");
+		
 		$('#frmcadastrocampanha').on('valid.fndtn.abide', function(e) {
 		  // Handle the submission of the form
 			if(e.namespace != 'abide.fndtn') {
@@ -293,7 +295,8 @@
 			campanha.req   = "cadastrocampanha";
 			
 			//$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php", 
-			$.post("http://teste/fidelizefood-backend/public_html/index.php",campanha,
+			$.post(url,campanha,
+
 				function(response){
 	
 					var obj = $.parseJSON(response);
@@ -339,7 +342,8 @@
 			campanha.req   = "atualizarcampanha";
 			
 			//$.post("http://softprevirpps/fidelizefood-backend/public_html/index.php", 
-			$.post("http://teste/fidelizefood-backend/public_html/index.php",campanha,
+			$.post(url,campanha,
+
 				function(response){
 	
 					var obj = $.parseJSON(response);
@@ -374,7 +378,7 @@
 		}
 
 		function init(){
-			
+
 			if (parsedInfoCampanha != null){
 				
 				if (parsedInfoCampanha[0] != "campanha"){
@@ -384,7 +388,8 @@
 					dados.req = "consultacampanhabyid";
 					dados.idcampanha = parsedInfoCampanha[0];
 					
-					$.post("http://teste/fidelizefood-backend/public_html/index.php", dados, 
+					$.post(url, dados, 
+
 						function(response){
 							
 							var obj = $.parseJSON(response);
