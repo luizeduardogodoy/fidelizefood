@@ -121,7 +121,7 @@
 		$(document).foundation();
 
 		var urlBackend = "http://fidelizefood.azurewebsites.net/public_html/index.php";
-
+		//var urlBackend = "http://localhost:8080/public_html/index.php";
 		//window.location.href = 'users.html';
 
 		$('#loginPage').on('valid.fndtn.abide', function(e) {
@@ -139,9 +139,6 @@
 				alert("Por favor, informar usuário e senha");
 				return;
 			}
-
-			$("#wait").removeClass("hide");
-			$("#form-login").css("opacity",0.3);
 
 			$.post(urlBackend,
 				{
