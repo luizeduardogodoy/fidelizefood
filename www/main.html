@@ -363,10 +363,10 @@
 
 						$("#listaCarimbos").html("<thead> <th width='150'>Restaurante</th> <th>Prêmio</th> <th>Inicio</th> <th>Fim</th> </thead> <tbody>");
 						//Listar os dados da campanha no cabeçalho						
-						$("#listaCarimbos").append("<tr><td>" + obj.registros[i].nomeRestaurante + "</td>" +
-								"<td>" + obj.registros[i].qtde + "</td> " +
-								"<td>" + obj.registros[i].inicio  + "</td> " +
-								"<td>" + obj.registros[i].fim  + "</td> " +
+						$("#listaCarimbos").append("<tr><td>" + obj.registros[0].nomeRestaurante + "</td>" +
+								"<td>" + obj.registros[0].qtde + "</td> " +
+								"<td>" + obj.registros[0].inicio  + "</td> " +
+								"<td>" + obj.registros[0].fim  + "</td> " +
 								"</tr>");
 								
 						for(var i = 0; i < obj.registros.length; i++){
