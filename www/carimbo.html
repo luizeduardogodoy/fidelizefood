@@ -202,7 +202,22 @@
 						}
 
 					} else {
+					
 
+						if(obj.status == "!temcampanha"){
+							
+							$("#mensagemfalha").removeClass("hide");
+							$("#carimboForm").css("opacity",0.3);
+							$("#msgtextfalha").append("<div>Não existe campanha ativa</div>");
+
+							window.setTimeout(function(){
+								$("#mensagemfalha").addClass("hide");
+								$("#carimboForm").css("opacity",1);
+								$("#msgtextfalha").html("");
+							}, 3000);
+							
+							return;
+						}
 						$("#mensagem").removeClass("hide");
 						$("#carimboForm").css("opacity",0.3);
 						$("#msgtext").append("<div>" + obj.mensagem + "</div>");
