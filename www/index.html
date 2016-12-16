@@ -168,7 +168,7 @@
 							$("#form-login").css("opacity",1);
 
 							//salva na sessão a url do backend para as outras funções js consultar
-				            window.sessionStorage.setItem("url", urlBackend);
+				            
 							window.location.href = "main.html";
 							
 						}, 3000);
@@ -189,6 +189,8 @@
 
 		function init(){
 			mudar();
+			
+			window.sessionStorage.setItem("url", urlBackend);
 		}
 
 		function cadastrarUser(){
