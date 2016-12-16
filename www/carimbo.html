@@ -152,13 +152,18 @@
 		  // Handle the submission of the form
 			if(e.namespace != 'abide.fndtn') {
 
-			  return;
+				return;
 			}
 			registrar();
 		});
 
 		function registrar(){
-
+		
+			var loading = $("<div style='' class='panel' align='center'>Processando...</div>")
+			
+			$("#carimboForm").css("opacity",0.3);
+			$("body").append(loading);
+			
 			var retrieveInfo = window.sessionStorage.getItem("info");
 			var parsedInfo = JSON.parse(retrieveInfo);
 
@@ -170,7 +175,7 @@
 
 			$.post(url, dados,
 				function(response){
-
+					loading.hide();
 					var obj = $.parseJSON(response);
 
 					if(obj.status == "!ok" ){
@@ -178,7 +183,7 @@
 						if(obj.mensagem != undefined){
 
 							$("#mensagemfalha").removeClass("hide");
-							$("#carimboForm").css("opacity",0.3);
+							
 							$("#msgtextfalha").append("<div>" + obj.mensagem + "</div>");
 
 							window.setTimeout(function(){
@@ -190,7 +195,7 @@
 						} else {
 
 							$("#mensagemfalha").removeClass("hide");
-							$("#carimboForm").css("opacity",0.3);
+							
 							$("#msgtextfalha").append("<div>Falha no registro do carimbo!</br>Contacte o administrador do aplicativo...</div>");
 
 							window.setTimeout(function(){

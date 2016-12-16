@@ -194,7 +194,7 @@
 		}
 		function listaRestaurantes(user){
 		
-			$("#listaCampanhas").css("opacity",0.2);
+				$("#listaCampanhas").css("opacity",0.2);
 			  $.post(window.sessionStorage.getItem("url"),
 				{
 					req : "listarcampanhaspart",
@@ -202,24 +202,35 @@
 				},
 				function(response){
 					var obj = $.parseJSON(response);
+					
 					if(obj.status == "ok"){
 						$("#listaCampanhas").html("<thead> <th width='150'>Restaurante</th> <th>Nº Ref</th> <th>Qtde</th> <th>Última</th> </thead> <tbody>");
-						for(var i = 0; i < obj.registros.length; i++){
-							$("#listaCampanhas").append("<tr><td>" + obj.registros[i].nomeRestaurante + "</td>" +
-								"<td>" + obj.registros[i].refeicoes + "</td>" +
-								"<td>" + obj.registros[i].qtde + "</td> " +
-								"<td>" + obj.registros[i].ultima  + "</td> " +
-								//João
-								//"<td><span onclick='listaCarimbos("+ obj.registros[i].idusuariocampanha +")'>Detalhe</span></tr></td>" +
-								"</tr>");
+						
+						if(obj.registros.length == 0){
+							$("#listaCampanhas").append("<tr><td colspan='4'>Nenhum registro encontrado</td></tr>");							
+						}
+						else{
+						
+							for(var i = 0; i < obj.registros.length; i++){
+								$("#listaCampanhas").append("<tr><td>" + obj.registros[i].nomeRestaurante + "</td>" +
+									"<td>" + obj.registros[i].refeicoes + "</td>" +
+									"<td>" + obj.registros[i].qtde + "</td> " +
+									"<td>" + obj.registros[i].ultima  + "</td> " +
+									//João
+									//"<td><span onclick='listaCarimbos("+ obj.registros[i].idusuariocampanha +")'>Detalhe</span></tr></td>" +
+									"</tr>");
+							}
 						}
 						$("#listaCampanhas").append("</tbody>");
 						$("#listaCampanhas").append("<tfoot><tr><td><span onclick='listaRestaurantes("+ user +")'>Atualizar</span></tr></td></tfoot>");
-						$("#listaCampanhas").css("opacity",1);
+						
 					}
 					else{
 						alert("Ocorreu algum problema!");
 					}
+					
+					$("#listaCampanhas").css("opacity",1);
+					
 			});
 		}
 		function consultaCampanha(){

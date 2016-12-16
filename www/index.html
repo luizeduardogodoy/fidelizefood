@@ -51,7 +51,7 @@
 	
 	<div class="row hide" id="errordataentered" align="center" style="position:absolute;margin-top:0;z-index:99" >
 		<div class="small-12 columns warning label" style="padding:20px;font-size:20px">
-			<div>Não foi possivel se conectar!</br>E-mail ou senha inválidos...</div>
+			<div>Não foi possível se conectar!</br>E-mail ou senha inválidos...</div>
 		</div>
 	</div>
 	
@@ -62,7 +62,7 @@
 	</div>
 	
 		
-	<div class="row" id="form-login">
+	<div class="row" id="form-login" >
 		
 		<form data-abide="ajax" id="loginPage">
 
@@ -109,27 +109,27 @@
 
 		$(document).foundation();
 
-	//localhost/fidelizefood-backend/public_html/index.php";
 		var urlBackend = "http://fidelizefood.azurewebsites.net/public_html/index.php";
-
-		//window.location.href = 'users.html';
+		//var urlBackend = "http://softprevirpps/fidelizefood-backend/public_html/index.php";
 
 		$('#loginPage').on('valid.fndtn.abide', function(e) {
 		  // Handle the submission of the form
-			 if(e.namespace != 'abide.fndtn') {
-				  return;
-			 }
+			if(e.namespace != 'abide.fndtn') {
+				return;
+			}
 			login();
 		});
 
 		function login(){
-	
 
 			if($("#user").val() == "" || $("#pass").val() == ""){
 				alert("Por favor, informar usuário e senha");
 				return;
 			}
-
+			
+			$("#form-login").css("opacity",0.3);
+			$("#wait").removeClass("hide");	
+			
 			$.post(urlBackend,
 				{
 					req : "login",
@@ -142,8 +142,8 @@
 
 					if(obj.status == "!ok"){
 					
-						$("#errordataentered").removeClass("hide");
-						$("#form-login").css("opacity",0.3);
+						$("#errordataentered").removeClass("hide");	
+						$("#wait").addClass("hide");							
 					
 						window.setTimeout(function(){
 							$("#user").val("");
@@ -157,28 +157,15 @@
 						var dadosUser = new Array();
 						dadosUser = [obj.id, obj.nome, obj.tipo];
 						window.sessionStorage.setItem("info", JSON.stringify(dadosUser));
-
-						$("#wait").removeClass("hide");
-						$("#form-login").css("opacity",0.3);
-					
-						window.setTimeout(function(){
-							$("#user").val("");
-							$("#pass").val("");
-							$("#wait").addClass("hide");
-							$("#form-login").css("opacity",1);
-
-							//salva na sessão a url do backend para as outras funções js consultar
-				            
-							window.location.href = "main.html";
-							
-						}, 3000);
+					      
+						window.location.href = "main.html";						
 					}
 				}
 			).fail(function(xhr, textStatus, errorThrown) {
 			
 				$("#errorconetion").removeClass("hide");
-				$("#form-login").css("opacity",0.3);
-			
+				$("#wait").addClass("hide");	
+							
 				window.setTimeout(function(){
 					$("#errorconetion").addClass("hide");
 					$("#form-login").css("opacity",1);
@@ -188,7 +175,7 @@
 		}
 
 		function init(){
-			
+			//salva na sessão a url do backend para as outras funções js consultar
 			window.sessionStorage.setItem("url", urlBackend);
 			
 			mudar();	
