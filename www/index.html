@@ -71,7 +71,7 @@
 			</div>
 
 			<div class="small-12 large-6 columns">
-				<label for="user"> Emaila:
+				<label for="user"> Email:
 					<input  type="email" name="email" id="user" placeholder="Digite seu e-mail..." required/>
 				</label>
 				<small class="error">Endereço de e-mail inválido.</small>
@@ -188,9 +188,10 @@
 		}
 
 		function init(){
-			mudar();
 			
 			window.sessionStorage.setItem("url", urlBackend);
+			
+			mudar();	
 		}
 
 		function cadastrarUser(){
